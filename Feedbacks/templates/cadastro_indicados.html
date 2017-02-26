@@ -1,0 +1,55 @@
+﻿{% extends "base.html" %}
+
+
+{% block title %} Cadastro dos Indicados {% endblock %}
+
+{% block content %}
+        <div class="container">
+
+        <div class="jumbotron">
+      <div class="container">
+        <h1>Bem vindo, {{cliente.Nome}} !</h1>
+        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+      </div>
+    </div>
+            <h2 class="form-signin-heading">Cadastro de Indicados</h2>
+         
+
+         <form id="myForm" class="form-horizontal" method="post"> {% csrf_token %}  
+            <div class="form-group">
+                 {{ formset.management_form }}
+                {% for form in formset.forms %}
+                {{form.id}}
+                <div class="form-inline">
+                       
+                                {{ form.Nome}}
+                                  
+                                {{ form.Email }}
+
+                                {{ form.Categ}}
+                  </div>
+                {% endfor %}
+              </div>
+                     
+            <div class="form-group">
+                <div class="col-md-12">
+                    <button class="btn btn-primary" type="submit" >Cadastrar Indicados</button> 
+                </div>
+            </div>
+            </form>
+
+         </div> <!-- /container -->
+
+
+
+{% load staticfiles %} 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="{% static 'js/jquery.formset.js' %}"></script>
+<script type="text/javascript">
+  $(function() {
+    $('#myForm tbody tr').formset({
+      prefix: '{{ formset.prefix }}'
+    });
+  })
+</script>
+{% endblock %}

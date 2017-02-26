@@ -1,0 +1,48 @@
+﻿
+
+{% extends "base.html" %}
+
+
+{% block title %} Cadastro de Cliente {% endblock %}
+{% load staticfiles %} 
+
+
+{% block nav %}
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://imersoes.com.br/"><img style="max-height:50px" src="{% static 'images/wmfb.png' %}" ></a>
+          <a class="navbar-brand" href="http://imersoes.com.br/">Imersões</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse navbar-right">
+           <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+               <li><a href="Psicologo/novo_cliente/">Novo Cliente</a></li>
+            <li><a href="/Psicologo/mudar_senha/">Mudar Senha</a></li>
+            <li><a href="password_reset">Esqueci minha senha</a></li>
+            <li><a href="/logout/">Log out</a></li>
+          </ul>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+{% endblock %} 
+
+{% block content %}
+    <div class="container">
+
+      <form class="form-signin" action="/Psicologo/novo_cliente/" method="post"> {% csrf_token %}
+            <h2 class="form-signin-heading">Cadastro de Cliente</h2>
+                {{form.as_p}}
+            <button class="btn btn-lg btn-primary btn-block" type="submit" value="Register">Cadastrar</button>
+      </form>
+    </div> <!-- /container --> 
+  <!--</body>
+</html>-->
+
+{% endblock %}

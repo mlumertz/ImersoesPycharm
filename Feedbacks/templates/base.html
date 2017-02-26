@@ -1,0 +1,104 @@
+﻿
+<!DOCTYPE html>
+{% load staticfiles %} 
+<html lang="pt">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>{% block title %}My Base Template{% endblock %}</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+    <!-- Bootstrap -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sticky-footer-navbar.css' %}" rel="stylesheet"
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="{% static 'js/jquery.formset.js' %}">
+
+    <script>
+        $(document).ready(function() {
+          $('.datepicker').datepicker();
+        });
+    </script>
+
+     <script>
+      $( function() {
+        $( "#accordion" ).accordion({
+          collapsible: true
+        });
+      } );
+    </script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+          <link rel="stylesheet" href="/static/css/style.css">
+       <link rel="stylesheet" href="/static/css/mbr-additional.css" type="text/css">
+
+<body>
+
+{% block nav %}
+
+   <section class="mbr-navbar mbr-navbar--freeze mbr-navbar--absolute mbr-navbar--sticky mbr-navbar--auto-collapse" id="ext_menu-0">
+        <div class="mbr-navbar__section mbr-section">
+            <div class="mbr-section__container container">
+                <div class="mbr-navbar__container">
+                    <div class="mbr-navbar__column mbr-navbar__column--s mbr-navbar__brand">
+                        <span class="mbr-navbar__brand-link mbr-brand mbr-brand--inline">
+                            <span class="mbr-brand__logo"><a href="http://imersoes.com.br/"><img src="{% static 'images/logo_branco.png' %}" class="mbr-navbar__brand-img mbr-brand__img" ></a></span>
+                            <span class="mbr-brand__name"><a class="mbr-brand__name text-white" href="http://imersoes.com.br/">IMERSÕES</a></span>
+                        </span>
+                    </div>
+                    <div class="mbr-navbar__hamburger mbr-hamburger"><span class="mbr-hamburger__line"></span></div>
+                    <div class="mbr-navbar__column mbr-navbar__menu">
+                        <nav class="mbr-navbar__menu-box mbr-navbar__menu-box--inline-right">
+                            <div class="mbr-navbar__column">
+                                <ul class="mbr-navbar__items mbr-navbar__items--right float-left mbr-buttons mbr-buttons--freeze mbr-buttons--right btn-decorator mbr-buttons--active mbr-buttons--only-links"><li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="#msg-box4-10">QUEM SOMOS</a></li> <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="#msg-box4-3">METODOLOGIA</a></li> <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="#msg-box3-4">COORDENADOR</a></li><li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="#form1-5">CONTATO</a></li></ul>                            
+                            
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+ {% endblock %}    
+
+    <div id="content">
+    
+	{% if messages %}
+	<ul class="messages">
+	    {% for message in messages %}
+	    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	    {% endfor %}
+	</ul>
+	{% endif %}
+	</div>
+    {% block content %}This is the content area{% endblock %}
+
+    <hr>
+   	 <footer class="footer">
+      <div class="container">
+        <p class="text-muted text-center">Copyright &copy; 2017 &middot; Todos os direitos reservados &middot; <a href="http://www.imersoes.com.br/" >www.imersoes.com.br</a></p>
+      </div>
+    </footer>
+</body>
+</html>

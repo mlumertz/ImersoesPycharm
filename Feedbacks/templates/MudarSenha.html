@@ -1,0 +1,53 @@
+﻿
+{% extends "base.html" %}
+{% load staticfiles %} 
+{% block title %} Mudar Senha {% endblock %}
+
+{% block nav %}
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://imersoes.com.br/"><img style="max-height:50px" src="{% static 'images/wmfb.png' %}" ></a>
+          <a class="navbar-brand" href="http://imersoes.com.br/">Imersões</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse navbar-right">
+           <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+               <li><a href="Psicologo/novo_cliente/">Novo Cliente</a></li>
+            <li><a href="/Psicologo/mudar_senha/">Mudar Senha</a></li>
+            <li><a href="password_reset">Esqueci minha senha</a></li>
+            <li><a href="/logout/">Log out</a></li>
+          </ul>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+{% endblock %} 
+
+{% block content %}
+
+    <div class="container">
+        <form class="form-signin" action="/Psicologo/auth_mudar_senha/" method="post">
+            {% csrf_token %}
+            <h2 class="form-signin-heading">Mudar Senha</h2>
+
+            <p class="form-signin-heading">{{message}}</p>
+
+            <label for="password" class="sr-only">SenhaAtual</label>
+            <p><input type="password" id="password" name="password" class="form-control" placeholder="Senha Atual" required></p>
+            <label for="NewPassword" class="sr-only">SenhaNova</label>
+            <p><input type="password" id="password" name="NewPassword" class="form-control" placeholder="Digite a nova senha" required></p>
+            <label for="NewPassword2" class="sr-only">SenhaNova</label>
+            <p><input type="password" id="password" name="NewPassword2" class="form-control" placeholder="Digite a nova senha novamente" required></p>
+
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Mudar Senha</button>
+        </form>
+    </div> <!-- /container -->
+
+{% endblock %}

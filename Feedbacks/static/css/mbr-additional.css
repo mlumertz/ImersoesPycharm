@@ -1,0 +1,74 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
+
+#ext_menu-0 .mbr-brand__name {
+  font-size: 16px;
+}
+#ext_menu-0.mbr-navbar--stuck .mbr-navbar__section {
+  background: #336699;
+}
+#ext_menu-0 .mbr-navbar__section {
+  background: #336699;
+}
+#ext_menu-0 .mbr-navbar__hamburger {
+  color: #ffffff;
+}
+#header1-11 DIV {
+  font-size: 30px;
+}
+#header1-11 H1 {
+  font-size: 30px;
+}
+#msg-box4-10 .mbr-header__text {
+  color: #ffffff;
+}
+#msg-box4-10 .mbr-header__subtext {
+  color: #ffffff;
+}
+#msg-box4-10 .mbr-article {
+  color: #ffffff;
+}
+#msg-box4-3 .mbr-header__text {
+  color: #535d81;
+}
+#msg-box4-3 .mbr-header__subtext {
+  color: #ffffff;
+}
+#msg-box4-3 .mbr-article {
+  color: #ffffff;
+}
+#msg-box4-3 .mbr-article P {
+  color: #535d81;
+}
+#msg-box3-4 .mbr-header .mbr-header__text {
+  text-align: center;
+  color: #ffffff;
+}
+#msg-box3-4 .mbr-header .mbr-header__subtext {
+  text-align: center;
+}
+#msg-box3-4 .mbr-article BLOCKQUOTE {
+  color: #ffffff;
+}
+#form1-5 .mbr-header__text {
+  color: #ffffff;
+}
+#footer1-7 P {
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+}
+#content5-16 .mbr-header .mbr-header__text {
+  text-align: center;
+  color: #fff;
+}
+#content5-16 .mbr-header .mbr-header__subtext {
+  text-align: center;
+  color: #fff;
+}
+#content5-16 .mbr-article {
+  color: #fff;
+}
+#content5-16 .mbr-article P {
+  text-align: center;
+  font-size: 20px;
+}
