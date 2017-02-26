@@ -1,3 +1,7 @@
+from __future__ import unicode_literals
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django import forms
 from django.contrib.auth.models import User
@@ -6,15 +10,15 @@ import uuid
 from datetime import datetime
 
 class Cliente(models.Model):
-    # fb1 = 'pre'
-    # fb2 = 'pos'
-    # fb3 = 'cus'
-    #
-    # FEEDBACK_CHOICES = (
-    #     (fb1, 'pré-coaching'),
-    #     (fb2, 'pós-coaching'),
-    #     (fb3, 'customizado'),
-    # )
+    fb1 = 'pre'
+    fb2 = 'pos'
+    fb3 = 'cus'
+
+    FEEDBACK_CHOICES = (
+        (fb1, 'pre-coaching'),
+        (fb2, 'pos-coaching'),
+        (fb3, 'customizado'),
+    )
 
     Nome = models.CharField(max_length=16)
 
@@ -25,7 +29,7 @@ class Cliente(models.Model):
     Status = models.BooleanField(default=False)
     CRP = models.CharField(max_length=16)
     FeedbackNome = models.CharField(max_length=36)
-    TipoDeFeedback = models.CharField(max_length=36)
+    TipoDeFeedback = models.CharField(max_length=36, choices=FEEDBACK_CHOICES, default=fb1)
     Deadline = models.DateField(null=True, blank=True)
     Arquivo = models.FileField()
 
@@ -49,13 +53,13 @@ class Categoria(models.Model):
 
 class Indicado(models.Model):
     ct1 = 'Amigos'
-    ct2 = 'Família'
+    ct2 = 'Familia'
     ct3 = 'Trabalho'
     ct4 = 'Universidade'
 
     CATEGORIAS_CHOICES = (
         (ct1, 'Amigos'),
-        (ct2, 'Família'),
+        (ct2, 'Familia'),
         (ct3, 'Trabalho'),
         (ct4, 'Universidade'),
     )
