@@ -233,9 +233,9 @@ def indicado_view(request, WebKey):
 
 def cadastro_indicados_view(request, WebKey):
     cliente = Cliente.objects.get(WebKey=WebKey)
-    cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm(cliente=cliente), extra=1)
+    cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=1)
+    categList = get_available_choices(cliente)
 
-    listCat = Categoria.objects.filter(cliente=cliente)
 
     if request.method == 'POST':
         formset = cliente_formsetFactory(request.POST, instance=cliente)
@@ -245,10 +245,14 @@ def cadastro_indicados_view(request, WebKey):
             return HttpResponseRedirect(path)
 
     formset = cliente_formsetFactory(instance=cliente)
+
+    for form in formset:
+        form.fields['Categ'].queryset = categList
+
     context = {
         'formset': formset,
         'cliente': cliente,
-        'listCat': listCat
+        'listCat': categList
     }
 
     return render(request, 'cadastro_indicados.html', context)
@@ -336,6 +340,7 @@ def create_report(request, WebKey):
     elements.append(Spacer(1, 25))
     elements.append(Paragraph("Pergunta 01:", styles["Normal"]))
     elements.append(Spacer(1, 12))
+
     elements.append(Paragraph(
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         styles["Definition"]))
