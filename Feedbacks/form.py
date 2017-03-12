@@ -51,29 +51,25 @@ def get_available_choices(arg):
 
 
 class IndicadoForm(ModelForm):
-    listnames = None
+
     Nome = forms.CharField(max_length=16, label="",
                            widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nome e Sobrenome"}), )
     Email = forms.EmailField(label="",
                              widget=forms.EmailInput(attrs={'class': "form-control", 'placeholder': "E-mail"}), )
 
-    Categ = forms.ModelChoiceField(label='categorias', queryset=listnames)
+    Categ = forms.ModelChoiceField(label='categorias', queryset=Categoria.objects.none())
+
 
     class Meta:
         model = Indicado
         fields = ['Nome', 'Email', 'Categ']
 
-    # def __init__(self, cliente=None, *args, **kwargs):
-    #
-    #     #    testelist = {"1", "2"}
-    #
-    #     if cliente:
-    #         if isinstance(cliente, Cliente):
-    #             mycliente = cliente
-    #             listnames = get_available_choices(mycliente)
-    #
-    #     super(IndicadoForm, self).__init__(*args, **kwargs)
-    #     self.fields['Categ'].queryset = listnames
+    def __init__(self, *args, **kwargs):
+        cliente =  kwargs.pop('cliente')
+        super(IndicadoForm, self).__init__(*args, **kwargs)
+
+        #self.fields['Categ'].queryset = Categoria.objects.filter(cliente = cliente)
+        self.fields['Categ'].queryset = Categoria.objects.filter(cliente=cliente)
 
 
 class IndicadoPageForm(ModelForm):

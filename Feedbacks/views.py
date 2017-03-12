@@ -24,7 +24,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
 from reportlab.lib.styles import getSampleStyleSheet
-#from reportlab.rl_config import defaultPageSize
+# from reportlab.rl_config import defaultPageSize
 from reportlab.lib.units import inch, cm
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_JUSTIFY
@@ -153,6 +153,28 @@ def indicado_view(request, WebKey):
         return render_to_response('indicado.html', args)
 
 
+def cadastro_indicados_view(request, WebKey):
+    cliente = Cliente.objects.get(WebKey=WebKey)
+    cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=1)
+
+
+    if request.method == 'POST':
+        formset = cliente_formsetFactory(request.POST, instance=cliente, form_kwargs={'cliente': cliente})
+        if formset.is_valid():
+            indicados = formset.save()
+            path = '/Cliente/%s' % WebKey
+            return HttpResponseRedirect(path)
+
+    formset = cliente_formsetFactory(instance=cliente, form_kwargs={'cliente': cliente})
+
+    context = {
+        'formset': formset,
+        'cliente': cliente,
+    }
+
+    return render(request, 'cadastro_indicados.html', context)
+
+
 # def cliente_view(request, WebKey):
 
 #    # Create the formset, specifying the form and formset we want to use.
@@ -231,32 +253,6 @@ def indicado_view(request, WebKey):
 
 #    return render(request, 'cliente.html', context)
 
-def cadastro_indicados_view(request, WebKey):
-    cliente = Cliente.objects.get(WebKey=WebKey)
-    cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=1)
-    categList = get_available_choices(cliente)
-
-    listCat = Categoria.objects.filter(cliente=cliente)
-
-    if request.method == 'POST':
-        formset = cliente_formsetFactory(request.POST, instance=cliente)
-        if formset.is_valid():
-            indicados = formset.save()
-            path = '/Cliente/%s' % WebKey
-            return HttpResponseRedirect(path)
-
-    formset = cliente_formsetFactory(instance=cliente)
-
-    for form in formset:
-        form.fields['Categ'].queryset = categList
-
-    context = {
-        'formset': formset,
-        'cliente': cliente,
-        'listCat': categList
-    }
-
-    return render(request, 'cadastro_indicados.html', context)
 
 
 # def cliente_view(request, WebKey):
@@ -305,57 +301,9 @@ def cadastro_indicados_view(request, WebKey):
 # def email_indicados(cliente)
 #
 
-def create_report(request, WebKey):
-    cliente = Cliente.objects.get(WebKey=WebKey)
-    pdfName = "report_%s.pdf" % cliente.Nome
-
-    # Create the HttpResponse object with the appropriate PDF headers
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=%s' % pdfName
-
-    buff = BytesIO()
-    # Create the PDF object, using the response object as its "file."
 
 
-    menu_pdf = SimpleDocTemplate(buff, pagesize=letter, rightMargin=72,
-                                 leftMargin=72, topMargin=40, bottomMargin=18)
 
-    logo = "./Feedbacks/static/images/logo.png"
-    im = Image(logo, 2 * cm, 2 * cm, hAlign='RIGHT')
-
-    styles = getSampleStyleSheet()
-    styles.add(ParagraphStyle(name='centered', alignment=TA_CENTER))
-    styles.add(ParagraphStyle(name='justify', alignment=TA_JUSTIFY))
-
-    # container for pdf elements
-    elements = []
-
-    elements.append(im);
-    elements.append(Paragraph("Relatório de Respostas Compiladas", styles["Title"]))
-    elements.append(Spacer(1, 25))
-    elements.append(Paragraph("Orientador: %s" % cliente.Orientador.username, styles["Normal"]))
-    elements.append(Spacer(1, 6))
-    elements.append(Paragraph("Cliente: %s" % cliente.Nome, styles["Normal"]))
-    elements.append(Spacer(1, 6))
-    elements.append(Paragraph("Tipo de Feedback: %s" % cliente.TipoDeFeedback, styles["Normal"]))
-    elements.append(Spacer(1, 25))
-    elements.append(Paragraph("Pergunta 01:", styles["Normal"]))
-    elements.append(Spacer(1, 12))
-
-    elements.append(Paragraph(
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        styles["Definition"]))
-    elements.append(Spacer(1, 12))
-    elements.append(Paragraph("Pergunta 02: ", styles["Normal"]))
-    elements.append(Spacer(1, 12))
-    elements.append(Paragraph(
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        styles["Definition"]))
-
-    menu_pdf.build(elements)
-    response.write(buff.getvalue())
-    buff.close()
-    return response
 def create_report(request, WebKey):
     cliente = Cliente.objects.get(WebKey=WebKey)
     pdfName = "report_%s.pdf" % cliente.Nome

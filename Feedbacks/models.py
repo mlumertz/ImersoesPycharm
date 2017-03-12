@@ -50,6 +50,9 @@ class Categoria(models.Model):
     class Meta:
         verbose_name_plural = 'Categorias'
 
+    def __unicode__(self):
+        return self.cat
+
 
 class Indicado(models.Model):
     ct1 = 'Amigos'
@@ -68,7 +71,7 @@ class Indicado(models.Model):
     Email = models.EmailField(max_length=100)
     WebKey = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     # Categ = models.CharField( max_length=36, choices= CATEGORIAS_CHOICES, default=ct1)
-    Categ = models.CharField(max_length=36)
+    Categ = models.ForeignKey(Categoria)
     Status = models.BooleanField(default=False)
     Resposta1 = models.TextField()
     Resposta2 = models.TextField()
