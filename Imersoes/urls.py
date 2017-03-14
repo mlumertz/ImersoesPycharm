@@ -46,4 +46,5 @@ urlpatterns = [
         password_reset_confirm, {'post_reset_redirect': '/password/done/'}, name='password_reset_confirm'),
     url(r'^password/done/$', password_reset_complete),
     url(r'^Cliente/(?P<WebKey>[0-9a-z-]+)$', views.cadastro_indicados_view, name='cliente'),
+    url(r'^nova_categoria/(?P<WebKey>[0-9a-z-]+)$', views.nova_categoria_view),
 ]

@@ -154,9 +154,10 @@ def indicado_view(request, WebKey):
 
 
 def cadastro_indicados_view(request, WebKey):
+
     cliente = Cliente.objects.get(WebKey=WebKey)
     cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=1)
-
+    categoria = CategoriaInputForm()
 
     if request.method == 'POST':
         formset = cliente_formsetFactory(request.POST, instance=cliente, form_kwargs={'cliente': cliente})
@@ -170,119 +171,14 @@ def cadastro_indicados_view(request, WebKey):
     context = {
         'formset': formset,
         'cliente': cliente,
+        'categoria': categoria,
     }
 
     return render(request, 'cadastro_indicados.html', context)
 
 
-# def cliente_view(request, WebKey):
-
-#    # Create the formset, specifying the form and formset we want to use.
-#    cliente = Cliente.objects.get(WebKey=WebKey)
-
-#    # lista = Indicado.objects.filter(QuemIndicou=cliente)
-
-#    IndicadoFormSet = inlineformset_factory(Cliente, Categoria, Indicado, IndicadoForm )
-
-# #if lista.count() > 0:
-#    #    IndicadoFormSet = inlineformset_factory(Cliente, Indicado, fields=('Nome', 'Email'), formset=BaseIndicadoFormSet)
-#    #else:
-#    #    IndicadoFormSet = inlineformset_factory(Cliente, Indicado, fields=('Nome', 'Email'), formset=BaseIndicadoFormSet)
-
-#    if request.method == 'POST':
-
-#        cat_form = CategoriaForm();
-
-#        if cat_form.is_valid():
-#            categoria = cat_form.save(commit = False)
-#            indicado_formset = IndicadoFormSet(request.POST, instance=categoria)
-#            if  indicado_formset.is_valid():
-#                categoria.save()
-#                indicado_formset.save()
-#                #newlista = Indicado.objects.filter(QuemIndicou=cliente)
-#                # for indicado in newlista:
-#                    #email = EmailMessage('Seu amigo ' + indicado.Nome + ' indicou voce!' , 'mlumertz.pythonanywhere.com/Indicado/' + str(indicado.WebKey) ,settings.EMAIL_HOST_USER, ['gabi.favieiro@gmail.com'])
-#                    #email.send()
-
-#                return render_to_response('sucesso.html')
 
 
-#    else:
-#        cat_form = CategoriaForm();
-#        indicado_formset = IndicadoFormSet(instance=Categoria())
-
-#    context = {
-#        'cat_form': cat_form,
-#        'formset': indicado_formset,
-#        'cliente' : cliente,
-#        }
-
-#    return render(request, 'cliente.html', context)
-
-
-
-
-# def cliente_view(request, WebKey):
-
-#    # Create the formset, specifying the form and formset we want to use.
-#    cliente = Cliente.objects.get(WebKey=WebKey)
-#    lista = Indicado.objects.filter(QuemIndicou=cliente)
-
-#    IndicadoFormSet = inlineformset_factory(Cliente, Indicado, fields=('Nome', 'Email'), formset=BaseIndicadoFormSet)
-
-#    if request.method == 'POST':
-#        formset = IndicadoFormSet(request.POST, instance=cliente)
-
-#        if  formset.is_valid():
-#            formset.save()
-#            newlista = Indicado.objects.filter(QuemIndicou=cliente)
-
-#            for indicado in newlista:
-#                #email = EmailMessage('Seu amigo ' + indicado.Nome + ' indicou você!' , 'mlumertz.pythonanywhere.com/Indicado/' + str(indicado.WebKey) ,settings.EMAIL_HOST_USER, ['gabi.favieiro@gmail.com'])
-#                #email.send()
-#                return render_to_response('sucesso.html')
-
-
-#    else:
-#        formset = IndicadoFormSet(instance=cliente)
-
-#    context = {
-#        'formset': formset,
-#        'cliente' : cliente
-#    }
-
-#    return render(request, 'cliente.html', context)
-
-
-
-# def cliente_view(request, WebKey):
-#     cliente = Cliente.objects.get(WebKey=WebKey)
-#
-#     Nested_formset = nested_formset_factory(
-#         Cliente,
-#         Categoria,
-#         Indicado,
-#         CategoriaForm,
-#         IndicadoForm,
-#         extra=1)
-#
-#     if request.method == 'POST':
-#
-#         formset = Nested_formset(request.POST, instance=cliente)
-#
-#         if formset.is_valid():
-#             indicados = formset.save()
-#             # email_indicados(cliente)
-#             return render_to_response('sucesso.html')
-#     else:
-#         formset = Nested_formset(instance=cliente)
-#
-#     context = {
-#         'categorias': formset,
-#         'cliente': cliente,
-#     }
-#
-#     return render(request, 'cliente.html', context)
 
 
 ## envia email de confirmacao para orientador
@@ -301,8 +197,21 @@ def cadastro_indicados_view(request, WebKey):
 # def email_indicados(cliente)
 #
 
+def nova_categoria_view(request, WebKey):
 
+    path = '/Cliente/%s' % WebKey
+    cl = Cliente.objects.get(WebKey=WebKey)
 
+    if request.method == 'POST':
+        categoria = CategoriaInputForm(request.POST)
+
+        if categoria.is_valid():
+            cat = categoria.save(commit=False)
+            cat.cliente = cl
+            cat.save()
+            return HttpResponseRedirect(path)
+
+    return HttpResponseRedirect(path)
 
 def create_report(request, WebKey):
     cliente = Cliente.objects.get(WebKey=WebKey)

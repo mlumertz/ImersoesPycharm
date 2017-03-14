@@ -70,7 +70,6 @@ class Indicado(models.Model):
     Nome = models.CharField(max_length=100)
     Email = models.EmailField(max_length=100)
     WebKey = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    # Categ = models.CharField( max_length=36, choices= CATEGORIAS_CHOICES, default=ct1)
     Categ = models.ForeignKey(Categoria)
     Status = models.BooleanField(default=False)
     Resposta1 = models.TextField()
