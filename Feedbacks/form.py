@@ -50,7 +50,7 @@ class IndicadoForm(ModelForm):
                              widget=forms.EmailInput(attrs={'class': "form-control", 'placeholder': "E-mail"}), )
 
     Categ = forms.ModelChoiceField(label='categorias',
-                                   widget=forms.Select(attrs = {'class': 'dropdown'}),
+                                   widget=forms.Select(attrs = {'class': "form-control"}),
                                    queryset=Categoria.objects.none() )
 
     class Meta:

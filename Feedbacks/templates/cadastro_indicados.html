@@ -14,10 +14,19 @@
         </div>
         <h2 class="form-signin-heading">Cadastro de Indicados</h2>
 
-        <form class="form-horizontal" action="/nova_categoria/{{cliente.WebKey}}" method="post">{% csrf_token %}
-            {{categoria.as_p}}
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Adicionar</button>
-        </form>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                    <form class="form-inline" action="/nova_categoria/{{ cliente.WebKey }}" method="post">{% csrf_token %}
+                        {{ categoria.cat}}
+
+                            <button type="submit" class="btn btn-primary">Adicionar</button>
+
+                    </form>
+            </div>
+        </div>
+
 
         <form id="myForm" class="form-horizontal" method="post"> {% csrf_token %}
 
