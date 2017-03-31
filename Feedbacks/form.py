@@ -71,6 +71,11 @@ class IndicadoForm(ModelForm):
 
 
 class IndicadoPageForm(ModelForm):
+
+    Resposta1 = forms.CharField(widget=forms.Textarea(attrs={'class': "form-control"}))
+
+    Resposta2 = forms.CharField(widget=forms.Textarea(attrs={'class': "form-control"}))
+
     class Meta:
         model = Indicado
         fields = ['Resposta1', 'Resposta2']

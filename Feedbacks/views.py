@@ -153,6 +153,7 @@ def indicado_view(request, WebKey):
         args = {}
         args.update(csrf(request))
         args['form'] = IndicadoPageForm(instance=indicado)
+        args['indicado'] = indicado
         return render_to_response('indicado.html', args)
 
 
@@ -174,7 +175,7 @@ def cadastro_indicados_view(request, WebKey):
             #path = '/Cliente/%s' % WebKey
             cliente.Status = True
             cliente.save()
-            return render_to_response('sucesso.html')
+            email_indicados(request, cliente.WebKey)
 
     formset = cliente_formsetFactory(instance=cliente, form_kwargs={'cliente': cliente})
 
@@ -223,10 +224,10 @@ def email_cliente(request, WebKey):
 ## envia email com a página para os indicados
 def email_indicados(request, WebKey):
     cliente = Cliente.objects.get(WebKey=WebKey)
-    indicados = Indicado.objects.filter(Cliente=cliente)
+    indicados = Indicado.objects.filter(cliente=cliente)
 
     for indicado in indicados:
-        email = EmailMessage('Caro '+ indicado.Nome, ' Voce foi indicado por: ' + cliente.Nome + ' para responder um questionario sobre o mesmo! Por favor acesse: ', pagina + '/Indicado/' + str(indicado.WebKey), settings.EMAIL_HOST_USER, [indicado.Email])
+        email = EmailMessage('Caro '+ indicado.Nome, ' Voce foi indicado por: ' + cliente.Nome + ' para responder um questionario sobre o mesmo! Por favor acesse: ' + pagina + '/Indicado/' + str(indicado.WebKey), settings.EMAIL_HOST_USER, [indicado.Email])
         email.send()
 
     return render_to_response('sucesso.html')
