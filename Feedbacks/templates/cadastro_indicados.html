@@ -19,10 +19,14 @@
             <div class="col-md-4"></div>
             <div class="col-md-4">
                     <form class="form-inline" action="/nova_categoria/{{ cliente.WebKey }}" method="post">{% csrf_token %}
-                        {{ categoria.cat}}
-
-                            <button type="submit" class="btn btn-primary">Adicionar</button>
-
+                         <div class="text-right">
+                        <div class="input-group">
+                            {{ categoria.cat}}
+                           <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">+</button>
+                            </span>
+                        </div>
+                         </div>
                     </form>
             </div>
         </div>
@@ -38,7 +42,6 @@
                         <th> <h5>{{form.Nome}} </h5> </th>
                         <th> <h5> {{form.Email}} </h5>  </th>
                         <th> <h5> {{form.Categ}} </h5> </th>
-                        <th> <h5>  {{ form.DELETE}}</h5> </th>
                         <th> <h5>  </h5> </th>
                     </tr>
                 {% endfor %}
