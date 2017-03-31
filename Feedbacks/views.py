@@ -18,6 +18,7 @@ from django.forms import inlineformset_factory
 from django.forms import formset_factory
 from django.views.generic.edit import UpdateView
 from django.http import HttpResponse
+from datetime import date
 
 import reportlab
 from reportlab.lib.pagesizes import letter
@@ -35,9 +36,11 @@ from io import BytesIO
 
 
 # Create your views here.
+pagina = 'http://127.0.0.1:8000'
 
 def login(request):
     if request.user.is_authenticated():
+        update_StatusDeadline(request.user) #TODO mudar depois !!! usar cron
         return HttpResponseRedirect('/Psicologo')
     c = {}
     c.update(csrf(request))
@@ -156,6 +159,11 @@ def indicado_view(request, WebKey):
 def cadastro_indicados_view(request, WebKey):
 
     cliente = Cliente.objects.get(WebKey=WebKey)
+
+    if cliente.Status:
+        return render_to_response('sucesso.html')
+
+
     cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=1)
     categoria = CategoriaInputForm()
 
@@ -163,8 +171,10 @@ def cadastro_indicados_view(request, WebKey):
         formset = cliente_formsetFactory(request.POST, instance=cliente, form_kwargs={'cliente': cliente})
         if formset.is_valid():
             indicados = formset.save()
-            path = '/Cliente/%s' % WebKey
-            return HttpResponseRedirect(path)
+            #path = '/Cliente/%s' % WebKey
+            cliente.Status = True
+            cliente.save()
+            return render_to_response('sucesso.html')
 
     formset = cliente_formsetFactory(instance=cliente, form_kwargs={'cliente': cliente})
 
@@ -176,7 +186,22 @@ def cadastro_indicados_view(request, WebKey):
 
     return render(request, 'cadastro_indicados.html', context)
 
+@login_required
+def delete_cliente (request, WebKey):
 
+    cliente = Cliente.objects.get(WebKey=WebKey)
+    cliente.delete()
+
+    return HttpResponseRedirect('/Psicologo')
+
+
+@login_required
+def lembrete_cliente (request, WebKey):
+
+    cliente = Cliente.objects.get(WebKey=WebKey)
+    email_cliente(cliente)
+
+    return HttpResponseRedirect('/Psicologo')
 
 
 
@@ -188,14 +213,24 @@ def cadastro_indicados_view(request, WebKey):
 # def email_conf_cliente(cliente)
 
 ## envia email com a página para cliente
-# def email_cliente(cliente, request)
-# email = EmailMessage('Seu psicologo ' + request.user.username + ' iniciou um processo de feedback com você!' ,  'mlumertz.pythonanywhere.com/Cliente/' + str(cliente.WebKey) ,settings.EMAIL_HOST_USER, [cliente.Email])
-# render_to_response('sucesso.html')
-# email.send()
+def email_cliente(request, WebKey):
+    cliente = Cliente.objects.get(WebKey=WebKey)
+    email = EmailMessage('Seu psicologo ' + cliente.Orientador.username + ' iniciou um processo de feedback com voce!', pagina + '/Cliente/' + str(cliente.WebKey), settings.EMAIL_HOST_USER, [cliente.Email])
+    email.send()
+    return HttpResponseRedirect('/Psicologo')
+
 
 ## envia email com a página para os indicados
-# def email_indicados(cliente)
-#
+def email_indicados(request, WebKey):
+    cliente = Cliente.objects.get(WebKey=WebKey)
+    indicados = Indicado.objects.filter(Cliente=cliente)
+
+    for indicado in indicados:
+        email = EmailMessage('Caro '+ indicado.Nome, ' Voce foi indicado por: ' + cliente.Nome + ' para responder um questionario sobre o mesmo! Por favor acesse: ', pagina + '/Indicado/' + str(indicado.WebKey), settings.EMAIL_HOST_USER, [indicado.Email])
+        email.send()
+
+    return render_to_response('sucesso.html')
+
 
 def nova_categoria_view(request, WebKey):
 
@@ -212,6 +247,14 @@ def nova_categoria_view(request, WebKey):
             return HttpResponseRedirect(path)
 
     return HttpResponseRedirect(path)
+
+def update_StatusDeadline(user):
+
+    clientes = Cliente.objects.filter(Orientador=user).filter(StatusDeadline=False)
+    for cliente in clientes:
+        if cliente.Deadline < date.today():
+            cliente.StatusDeadline=True
+            cliente.save()
 
 def create_report(request, WebKey):
     cliente = Cliente.objects.get(WebKey=WebKey)

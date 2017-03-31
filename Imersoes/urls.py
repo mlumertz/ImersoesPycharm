@@ -46,5 +46,8 @@ urlpatterns = [
         password_reset_confirm, {'post_reset_redirect': '/password/done/'}, name='password_reset_confirm'),
     url(r'^password/done/$', password_reset_complete),
     url(r'^Cliente/(?P<WebKey>[0-9a-z-]+)$', views.cadastro_indicados_view, name='cliente'),
+    url(r'^DeletarCliente/(?P<WebKey>[0-9a-z-]+)$', views.delete_cliente ),
     url(r'^nova_categoria/(?P<WebKey>[0-9a-z-]+)$', views.nova_categoria_view),
+    url(r'^EmailCliente/(?P<WebKey>[0-9a-z-]+)$', views.email_cliente),
+    url(r'^EmailIndicado/(?P<WebKey>[0-9a-z-]+)$', views.email_indicados),
 ]

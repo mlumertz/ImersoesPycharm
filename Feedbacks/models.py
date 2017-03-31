@@ -31,7 +31,9 @@ class Cliente(models.Model):
     FeedbackNome = models.CharField(max_length=36)
     TipoDeFeedback = models.CharField(max_length=36, choices=FEEDBACK_CHOICES, default=fb1)
     Deadline = models.DateField(null=True, blank=True)
+    StatusDeadline = models.BooleanField(default=False)
     Arquivo = models.FileField()
+    ProgressBar = models.DecimalField(default=0, max_digits=3, decimal_places=0)
 
     def __str__(self):
         return self.Nome
@@ -41,8 +43,8 @@ class Cliente(models.Model):
 
 
 class Categoria(models.Model):
-    cat = models.CharField(max_length=16)
-    cliente = models.ForeignKey(Cliente)
+    cat = models.CharField(max_length=36)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.Nome
@@ -74,7 +76,7 @@ class Indicado(models.Model):
     Status = models.BooleanField(default=False)
     Resposta1 = models.TextField()
     Resposta2 = models.TextField()
-    cliente = models.ForeignKey(Cliente)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.Nome
