@@ -125,6 +125,7 @@ def novo_cliente_view(request):
 
         if form.is_valid():
             cliente = form.save()
+            # email_cliente(cliente, request)
 
             ct1 = Categoria(cat="Amigos", cliente=cliente)
             ct1.save()
@@ -177,6 +178,7 @@ def cadastro_indicados_view(request, WebKey):
 
     cliente = get_object_or_404(Cliente, WebKey=WebKey)
     psicologo = cliente.Orientador
+    path = '/Cliente/%s' % WebKey
 
     if cliente.Status:
         return render_to_response('sucesso.html')
@@ -186,14 +188,31 @@ def cadastro_indicados_view(request, WebKey):
     categoria = CategoriaInputForm()
 
     if request.method == 'POST':
+        if 'Categoria' in request.POST:
+            categoria = CategoriaInputForm(request.POST)
+
         formset = cliente_formsetFactory(request.POST, instance=cliente, form_kwargs={'cliente': cliente})
+
+
+
+        indicados = formset.save(commit=False)
+        #path = '/Cliente/%s' % WebKey
+        cliente.Status = formset.is_valid()
+        cliente.save()
+
+
+        if 'Categoria' in request.POST:
+
+
+            if categoria.is_valid():
+                cat = categoria.save(commit=False)
+                cat.cliente = cliente
+                cat.save()
+                return HttpResponseRedirect(path)
+
         if formset.is_valid():
-            indicados = formset.save()
-            #path = '/Cliente/%s' % WebKey
-            cliente.Status = True
-            cliente.save()
-            email_indicados(request, cliente.WebKey)
             return render_to_response('sucesso.html')
+            email_indicados(request, cliente.WebKey)
 
     formset = cliente_formsetFactory(instance=cliente, form_kwargs={'cliente': cliente})
 

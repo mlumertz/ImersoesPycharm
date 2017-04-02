@@ -89,6 +89,7 @@ class CategoriaInputForm(ModelForm):
 
     cat = forms.CharField(max_length=50, label="",
                            widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nova Categoria"}), )
+
     class Meta:
         model = Categoria
         fields = ['cat']
