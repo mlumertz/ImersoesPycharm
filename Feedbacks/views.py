@@ -18,6 +18,7 @@ from django.forms import inlineformset_factory
 from django.forms import formset_factory
 from django.views.generic.edit import UpdateView
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from datetime import date
 
 import reportlab
@@ -140,7 +141,7 @@ def sucesso(request):
 
 
 def indicado_view(request, WebKey):
-    indicado = Indicado.objects.get(WebKey=WebKey)
+    indicado = Indicado.objects.get_or_404(WebKey=WebKey)
 
     if request.method == 'POST':
         form = IndicadoPageForm(request.POST, instance=indicado)
@@ -159,7 +160,7 @@ def indicado_view(request, WebKey):
 
 def cadastro_indicados_view(request, WebKey):
 
-    cliente = Cliente.objects.get(WebKey=WebKey)
+    cliente = get_object_or_404(Cliente, WebKey=WebKey)
 
     if cliente.Status:
         return render_to_response('sucesso.html')
@@ -190,7 +191,7 @@ def cadastro_indicados_view(request, WebKey):
 @login_required
 def delete_cliente (request, WebKey):
 
-    cliente = Cliente.objects.get(WebKey=WebKey)
+    cliente = get_object_or_404(Cliente, WebKey=WebKey)
     cliente.delete()
 
     return HttpResponseRedirect('/Psicologo')
@@ -199,7 +200,7 @@ def delete_cliente (request, WebKey):
 @login_required
 def lembrete_cliente (request, WebKey):
 
-    cliente = Cliente.objects.get(WebKey=WebKey)
+    cliente = get_object_or_404(Cliente, WebKey=WebKey)
     email_cliente(cliente)
 
     return HttpResponseRedirect('/Psicologo')
@@ -215,7 +216,7 @@ def lembrete_cliente (request, WebKey):
 
 ## envia email com a página para cliente
 def email_cliente(request, WebKey):
-    cliente = Cliente.objects.get(WebKey=WebKey)
+    cliente = get_object_or_404(Cliente, WebKey=WebKey)
     email = EmailMessage('Seu psicologo ' + cliente.Orientador.username + ' iniciou um processo de feedback com voce!', pagina + '/Cliente/' + str(cliente.WebKey), settings.EMAIL_HOST_USER, [cliente.Email])
     email.send()
     return HttpResponseRedirect('/Psicologo')
@@ -223,7 +224,7 @@ def email_cliente(request, WebKey):
 
 ## envia email com a página para os indicados
 def email_indicados(request, WebKey):
-    cliente = Cliente.objects.get(WebKey=WebKey)
+    cliente = get_object_or_404(Cliente, WebKey=WebKey)
     indicados = Indicado.objects.filter(cliente=cliente)
 
     for indicado in indicados:
@@ -236,7 +237,7 @@ def email_indicados(request, WebKey):
 def nova_categoria_view(request, WebKey):
 
     path = '/Cliente/%s' % WebKey
-    cl = Cliente.objects.get(WebKey=WebKey)
+    cl = get_object_or_404(Cliente, WebKey=WebKey)
 
     if request.method == 'POST':
         categoria = CategoriaInputForm(request.POST)
@@ -252,13 +253,15 @@ def nova_categoria_view(request, WebKey):
 def update_StatusDeadline(user):
 
     clientes = Cliente.objects.filter(Orientador=user).filter(StatusDeadline=False)
+
     for cliente in clientes:
         if cliente.Deadline < date.today():
             cliente.StatusDeadline=True
             cliente.save()
 
 def create_report(request, WebKey):
-    cliente = Cliente.objects.get(WebKey=WebKey)
+
+    cliente = Cliente.objects.get_or_404(WebKey=WebKey)
     pdfName = "report_%s.pdf" % cliente.Nome
 
     # Create the HttpResponse object with the appropriate PDF headers.
@@ -282,7 +285,7 @@ def create_report(request, WebKey):
     # container for pdf elements
     elements = []
 
-    elements.append(im);
+    elements.append(im)
     elements.append(Paragraph("Relatório de Respostas Compiladas", styles["Title"]))
     elements.append(Spacer(1, 25))
     elements.append(Paragraph("Orientador: %s" % cliente.Orientador.username, styles["Normal"]))
