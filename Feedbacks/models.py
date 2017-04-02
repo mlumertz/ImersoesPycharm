@@ -11,7 +11,7 @@ from datetime import datetime
 
 class Responsavel(models.Model):
 
-    DjangoUser = models.ForeignKey(User)
+    DjangoUser = models.OneToOneField(User, on_delete=models.CASCADE)
     Nome = models.CharField(max_length=100)
     CRP =  models.CharField(max_length=50)
 
