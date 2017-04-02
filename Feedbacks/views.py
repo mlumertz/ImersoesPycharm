@@ -118,16 +118,25 @@ def Psicologo_view(request):
 
 @login_required
 def novo_cliente_view(request):
+
     if request.method == 'POST':
+
         form = ClienteForm(request.user, request.POST)
+
         if form.is_valid():
             cliente = form.save()
-            # email_cliente(cliente, request)
 
             ct1 = Categoria(cat="Amigos", cliente=cliente)
             ct1.save()
             ct2 = Categoria(cat="Familia", cliente=cliente)
             ct2.save()
+            ct3 = Categoria(cat="Universidade", cliente=cliente)
+            ct3.save()
+            ct4 = Categoria(cat="Trabalho", cliente=cliente)
+            ct4.save()
+
+            email_cliente(request, cliente.WebKey)
+
             return HttpResponseRedirect('/Psicologo')
 
     args = {}
@@ -137,11 +146,15 @@ def novo_cliente_view(request):
 
 
 def sucesso(request):
+
     return render_to_response('sucesso.html')
 
 
 def indicado_view(request, WebKey):
-    indicado = Indicado.objects.get_or_404(WebKey=WebKey)
+
+    indicado = get_object_or_404(Indicado, WebKey=WebKey)
+    cliente = indicado.cliente
+    psicologo = cliente.Orientador
 
     if request.method == 'POST':
         form = IndicadoPageForm(request.POST, instance=indicado)
@@ -155,18 +168,21 @@ def indicado_view(request, WebKey):
         args.update(csrf(request))
         args['form'] = IndicadoPageForm(instance=indicado)
         args['indicado'] = indicado
+        args['cliente'] = cliente
+        args['responsavel'] = psicologo
         return render_to_response('indicado.html', args)
 
 
 def cadastro_indicados_view(request, WebKey):
 
     cliente = get_object_or_404(Cliente, WebKey=WebKey)
+    psicologo = cliente.Orientador
 
     if cliente.Status:
         return render_to_response('sucesso.html')
 
 
-    cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=1)
+    cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=1, min_num=3)
     categoria = CategoriaInputForm()
 
     if request.method == 'POST':
@@ -177,6 +193,7 @@ def cadastro_indicados_view(request, WebKey):
             cliente.Status = True
             cliente.save()
             email_indicados(request, cliente.WebKey)
+            return render_to_response('sucesso.html')
 
     formset = cliente_formsetFactory(instance=cliente, form_kwargs={'cliente': cliente})
 
@@ -184,6 +201,7 @@ def cadastro_indicados_view(request, WebKey):
         'formset': formset,
         'cliente': cliente,
         'categoria': categoria,
+        'responsavel': psicologo,
     }
 
     return render(request, 'cadastro_indicados.html', context)

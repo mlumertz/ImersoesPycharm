@@ -11,12 +11,15 @@ from django.forms import inlineformset_factory
 
 from functools import partial
 
-DateInput = partial(forms.DateInput, {'class': 'form-control datepicker', 'placeholder': "dd/mm/aaaa"})
+DateInput = partial(forms.DateInput, {'class': 'form-control datepicker', 'placeholder': "dd/mm/aaaa", 'input_formats': '%d-%m-%Y'})
+
+Pergunta1 = "Quais são as principais qualidades ?"
+Pergunta2 = "Quais são as principais oportunidades de melhorias?"
 
 
 class ClienteForm(ModelForm):
 
-    Nome = forms.CharField(max_length=36, label="",
+    Nome = forms.CharField(max_length=60, label="",
                            widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nome e Sobrenome"}), )
     Email = forms.EmailField(label="",
                              widget=forms.EmailInput(attrs={'class': "form-control", 'placeholder': "E-mail"}), )
@@ -27,7 +30,7 @@ class ClienteForm(ModelForm):
                                        widget=forms.Select( attrs = {'class': "form-control", }),
                                        choices=Cliente.FEEDBACK_CHOICES)
 
-    FeedbackNome = forms.CharField(max_length=36, label="",
+    FeedbackNome = forms.CharField(max_length=50, label="",
                            widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nome do Questionario"}), )
     class Meta:
         model = Cliente
@@ -40,6 +43,8 @@ class ClienteForm(ModelForm):
     def save(self, commit=True):
         cliente = super(ClienteForm, self).save(commit=False)
         cliente.Orientador = self.user
+        cliente.Pergunta1 = Pergunta1
+        cliente.Pergunta2 = Pergunta2
 
         if commit:
             cliente.save()
@@ -49,7 +54,7 @@ class ClienteForm(ModelForm):
 
 class IndicadoForm(ModelForm):
 
-    Nome = forms.CharField(max_length=36, label="",
+    Nome = forms.CharField(max_length=60, label="",
                            widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nome e Sobrenome"}), )
 
     Email = forms.EmailField(label="",
@@ -82,7 +87,7 @@ class IndicadoPageForm(ModelForm):
 
 class CategoriaInputForm(ModelForm):
 
-    cat = forms.CharField(max_length=16, label="",
+    cat = forms.CharField(max_length=50, label="",
                            widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nova Categoria"}), )
     class Meta:
         model = Categoria
