@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-#!/usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from django.db import models
@@ -9,11 +9,11 @@ from django.conf import settings
 import uuid
 from datetime import datetime
 
-class Responsavel(models.Model):
 
+class Responsavel(models.Model):
     DjangoUser = models.OneToOneField(User, on_delete=models.CASCADE)
     Nome = models.CharField(max_length=100)
-    CRP =  models.CharField(max_length=50)
+    CRP = models.CharField(max_length=50)
 
     def __str__(self):
         return self.Nome
@@ -97,5 +97,3 @@ class Indicado(models.Model):
 
     class Meta:
         verbose_name_plural = 'Indicados'
-
-

@@ -125,7 +125,6 @@ def novo_cliente_view(request):
 
         if form.is_valid():
             cliente = form.save()
-            # email_cliente(cliente, request)
 
             ct1 = Categoria(cat="Amigos", cliente=cliente)
             ct1.save()
@@ -180,50 +179,40 @@ def cadastro_indicados_view(request, WebKey):
     psicologo = cliente.Orientador
     path = '/Cliente/%s' % WebKey
 
-    if cliente.Status:
-        return render_to_response('sucesso.html')
+    # if cliente.Status:
+    #     return render_to_response('sucesso.html')
 
 
-    cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=1, min_num=3)
-    categoria = CategoriaInputForm()
+    cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=1)
+    formset = cliente_formsetFactory(request.POST or None, instance=cliente, form_kwargs={'cliente': cliente})
+    categoria = CategoriaInputForm( request.POST or None)
 
     if request.method == 'POST':
-        if 'Categoria' in request.POST:
-            categoria = CategoriaInputForm(request.POST)
-
-        formset = cliente_formsetFactory(request.POST, instance=cliente, form_kwargs={'cliente': cliente})
-
-
-
-        indicados = formset.save(commit=False)
-        #path = '/Cliente/%s' % WebKey
-        cliente.Status = formset.is_valid()
-        cliente.save()
-
 
         if 'Categoria' in request.POST:
-
-
             if categoria.is_valid():
                 cat = categoria.save(commit=False)
                 cat.cliente = cliente
                 cat.save()
-                return HttpResponseRedirect(path)
+                categoria = CategoriaInputForm()
+        else:
+            if formset.is_valid():
+                indicados = formset.save()
+                # path = '/Cliente/%s' % WebKey
+                cliente.Status = formset.is_valid()
+                cliente.save()
+                email_indicados(request, cliente.WebKey)
+                return render_to_response('sucesso.html')
 
-        if formset.is_valid():
-            return render_to_response('sucesso.html')
-            email_indicados(request, cliente.WebKey)
 
-    formset = cliente_formsetFactory(instance=cliente, form_kwargs={'cliente': cliente})
+    args = {}
+    args.update(csrf(request))
+    args['formset'] = formset
+    args['categoria'] = categoria
+    args['cliente'] = cliente
+    args['responsavel'] = psicologo
 
-    context = {
-        'formset': formset,
-        'cliente': cliente,
-        'categoria': categoria,
-        'responsavel': psicologo,
-    }
-
-    return render(request, 'cadastro_indicados.html', context)
+    return render_to_response( 'cadastro_indicados.html', args)
 
 @login_required
 def delete_cliente (request, WebKey):
