@@ -5,6 +5,11 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
+from django.template import Context
+
+from django.template.loader import render_to_string, get_template
+
 from django.contrib import auth
 from django.template import loader
 from django.template.context_processors import csrf
@@ -144,6 +149,29 @@ def novo_cliente_view(request):
     args['form'] = ClienteForm(request.user)
     return render_to_response('novo_cliente.html', args)
 
+@login_required
+def perfil_view(request):
+
+    djangoU = request.user
+
+    responsavel, created = Responsavel.objects.get_or_create(DjangoUser=djangoU)
+
+
+    form = ResponsavelForm(request.POST or None, instance=responsavel)
+
+    if request.method == 'POST':
+
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect('/Psicologo')
+
+    args = {}
+    args.update(csrf(request))
+    args['form'] = form
+    args['user'] = djangoU
+
+    return render_to_response('profile.html', args)
 
 def sucesso(request):
 
@@ -242,14 +270,31 @@ def lembrete_cliente (request, WebKey):
 
 ## envia email com a página para cliente
 def email_cliente(request, WebKey):
+
+
     cliente = get_object_or_404(Cliente, WebKey=WebKey)
-    email = EmailMessage('Seu psicologo ' + cliente.Orientador.username + ' iniciou um processo de feedback com voce!', pagina + '/Cliente/' + str(cliente.WebKey), settings.EMAIL_HOST_USER, [cliente.Email])
+
+    ctx ={
+        'cliente': cliente.Nome,
+        'responsavel': cliente.Orientador.username,
+        'link': pagina + '/Cliente/' + str(cliente.WebKey),
+        'data': cliente.Deadline,
+    }
+
+    subject = 'WMFB - Processo de Feedback'
+    template = get_template('email_cliente.html')
+    message = template.render(Context(ctx))
+
+    email = EmailMessage(subject, message, settings.EMAIL_HOST_USER, [cliente.Email])
+    email.content_subtype = 'html'
     email.send()
+
     return HttpResponseRedirect('/Psicologo')
 
 
 ## envia email com a página para os indicados
 def email_indicados(request, WebKey):
+
     cliente = get_object_or_404(Cliente, WebKey=WebKey)
     indicados = Indicado.objects.filter(cliente=cliente)
 

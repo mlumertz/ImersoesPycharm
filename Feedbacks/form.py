@@ -51,6 +51,23 @@ class ClienteForm(ModelForm):
         return cliente
 
 
+class ResponsavelForm(ModelForm):
+
+    Nome = forms.CharField(max_length=100, label="",
+                           widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nome e Sobrenome"}), )
+
+    Id_number = forms.CharField(max_length=10, label="",
+                           widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "CRP / CRM "}), )
+
+    Tipo_id = forms.ChoiceField(label = "",
+                                widget=forms.Select(attrs={'class': "form-control", }),
+                                choices=Responsavel.CATEGORIAS_CHOICES)
+
+    class Meta:
+        model = Responsavel
+        fields = ['Nome', 'Id_number', 'Tipo_id']
+
+
 
 class IndicadoForm(ModelForm):
 
@@ -73,6 +90,8 @@ class IndicadoForm(ModelForm):
         super(IndicadoForm, self).__init__(*args, **kwargs)
         self.fields['Categ'].queryset = Categoria.objects.filter(cliente=cliente)
         self.fields['Categ'].empty_label = 'Selecionar uma Categoria...'
+
+
 
 
 class IndicadoPageForm(ModelForm):

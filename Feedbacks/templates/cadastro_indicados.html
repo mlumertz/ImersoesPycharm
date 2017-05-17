@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %}
+﻿{% extends "base_cliente.html" %}
 
 {% block title %} WMFB - Imersões {% endblock %}
 
@@ -10,7 +10,7 @@
         <div class="jumbotron">
             <div class="container">
                 <h2>Bem vindo, {{ cliente.Nome }} </h2>
-                <p>This is a template for a simple marketing or informational website. It includes a large callout
+                <p class="text-justify">This is a template for a simple marketing or informational website. It includes a large callout
                     called a jumbotron and three supporting pieces of content. Use it as a starting point to create
                     something more unique.</p>
             </div>
@@ -30,7 +30,7 @@
 
                 </div>
             </div>
-
+            <p></p>
             <div>
                 <table class="table table-condensed table-hover table-condensed">
                     {{ formset.management_form }}

@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^Indicado/(?P<WebKey>[0-9a-z-]+)$', views.indicado_view, name='indicado'),
     url(r'^pdf/(?P<WebKey>[0-9a-z-]+)$', views.create_report, name='create_report'),
     url(r'^Psicologo/mudar_senha/$', views.mudar_senha_view),
+    url(r'^Psicologo/perfil/$', views.perfil_view),
     url(r'^Psicologo/auth_mudar_senha/$', views.auth_mudar_senha_view),
     url(r'^password_reset/$', password_reset, {'post_reset_redirect': '/password/reset/done/'},
         name="password_reset"),

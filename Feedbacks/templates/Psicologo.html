@@ -5,50 +5,27 @@
 {% block title %} WMFB - Sistema de Feedbacks{% endblock %}
 
 
-{% block nav %}
-      <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="http://imersoes.com.br/"><img style="max-height:100px" src="{% static 'images/wmfb.png' %}" ></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse navbar-right">
-           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-               <li><a href="Psicologo/novo_cliente/">Novo Feedback</a></li>
-            <li><a href="/Psicologo/mudar_senha/">Mudar Senha</a></li>
-            <li><a href="/logout/">Log out</a></li>
-          </ul>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
-{% endblock %} 
-
 {% block content %}
     <div class="container">
         <div class="jumbotron">
             <div class="container">
                 <h2>Bem vindo, {{ user.username }} !</h2>
-                <p>This is a template for a simple marketing or informational website. It includes a large callout
+                <p class="text-justify">This is a template for a simple marketing or informational website. It includes a large callout
                     called a jumbotron and three supporting pieces of content. Use it as a starting point to create
                     something more unique.</p>
             </div>
         </div>
 
         <div class="container text-center">
-            <h2>Clientes</h2>
+            <h3>Processos de Feedback</h3>
+        <p></p>
 
             <table class="table table-condensed table-hover table-condensed">
                 <tr>
-                    <th class="text-center"> Nome</th>
-                    <th class="text-center"> E-mail</th>
-                    <th class="text-center"> Nome do Processo</th>
-                    <th class="text-center"> Tipo </th>
+                    <th> Nome</th>
+                    <th > E-mail</th>
+                    <th > Nome do Processo</th>
+                    <th > Tipo </th>
                     <th class="text-center"> Status</th>
                     <th class="text-center"> Data Limite</th>
                     <th class="text-center"> Progresso</th>

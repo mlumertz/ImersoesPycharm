@@ -1,11 +1,66 @@
-<!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
 
-</body>
-</html>
+{% extends "base.html" %}
+
+
+{% block title %} WMFB {% endblock %}
+{% load staticfiles %} 
+
+
+
+{% block content %}
+    <div class="container">
+
+    <div class="jumbotron">
+        <h3 class="text-center">Perfil de Usuário</h3>
+    </div>
+        <div class="container">
+        <form class="form-horizontal" action="/Psicologo/perfil/" method="post"> {% csrf_token %}
+
+
+            <div class="form-group">
+                <label for="inputNome" class="col-sm-2 control-label">Nome</label>
+                <div class="col-sm-10">
+                    {{ form.Nome }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">E-mail</label>
+                <div class="col-sm-10">
+                    {{ user.email }}
+                </div>
+            </div>
+
+
+                <div class= form-group>
+                    <label for="inputFeedbackNome" class="col-sm-2 control-label">Identificador</label>
+
+                    <div class="col-sm-2">
+                        {{ form.Tipo_id }}
+                    </div>
+
+                    <div class="col-sm-8">
+                        {{ form.Id_number }}
+                    </div>
+                </div>
+
+
+            <div class="form-group">
+
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-8 col-md-4 text-right">
+            <button class="btn btn-primary" type="submit" value="Register">Salvar</button>
+                </div>
+            </div>
+      </form>
+    </div> <!-- /container --> 
+  <!--</body>
+</html>-->
+    </div>
+
+
+{% endblock %}
