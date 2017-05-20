@@ -1,14 +1,21 @@
 ﻿
-{% extends "base.html" %}
+{% extends "base_cliente.html" %}
 
-{% block title %} Página de Login {% endblock %}
+{% block title %} WMP - login {% endblock %}
 {% block content %}
 <div class="container">
 
   <form class="form-signin" action="/auth/" method="post">{% csrf_token %}
-        <h2 class="form-signin-heading">Página de Login</h2>
+        <h2 class="form-signin-heading text-center">Planejamento de Carreira</h2>
+        <p class="text-center"> Por favor, digite seu usuário e senha.</p>
         <label for="username" class="sr-only">Username</label>
-        <p><input type="text" id="username" name="username" class="form-control" placeholder="Usuário" required autofocus></p>
+
+        <div class="input-group">
+          <input type="text" id="username" name="username" class="form-control" placeholder="Usuário" required autofocus>
+        <span class="input-group-addon" id="basic-addon2">@wmfb.com.br</span>
+        </div>
+
+      <p></p>
         <label for="password" class="sr-only">Senha</label>
         <p><input type="password" id="password"  name="password" class="form-control" placeholder="Senha" required></p>
      <!--   <div class="checkbox">
@@ -17,9 +24,19 @@
           </label>
         </div> -->
         <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+      <p></p>
+        <div class="col-sm-7"><a href="/password_reset/">Esqueceu sua senha? </a></div>
+        <div class="col-sm-5 align-right"><a href="/Psicologo/novo_usuario/">Registre-se</a></div>
+
+
     </form>
 
-</div> <!-- /container -->
+
+    </div>
+
+
+
+
 
 {% endblock %}
 

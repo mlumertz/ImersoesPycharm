@@ -33,6 +33,8 @@ urlpatterns = [
     url(r'^invalid$', views.invalid_login),
     url(r'^Psicologo$', views.Psicologo_view),
     url(r'^Psicologo/novo_cliente/$', views.novo_cliente_view),
+    url(r'^Psicologo/novo_usuario/$', views.novo_usuario_view),
+    url(r'^Psicologo/create/$', views.criar_novo_usuario_view),
     # url(r'^Cliente/(?P<WebKey>[0-9a-z-]+)$', views.cliente_view, name = 'cliente' ),
     url(r'^Cliente/sucesso/$', views.sucesso),
     url(r'^Indicado/(?P<WebKey>[0-9a-z-]+)$', views.indicado_view, name='indicado'),

@@ -43,6 +43,7 @@ from io import BytesIO
 
 # Create your views here.
 pagina = 'http://127.0.0.1:8000'
+email_dominio = '@gmail.com' #TODO mudar depois para @wmfb.com.br
 
 def login(request):
     if request.user.is_authenticated():
@@ -65,6 +66,34 @@ def auth_view(request):
     else:
         return HttpResponseRedirect('/invalid')
 
+def novo_usuario_view(request):
+    c = {}
+    c.update(csrf(request))
+    return render_to_response('new_user.html', c)
+
+def criar_novo_usuario_view(request):
+
+    username = request.POST.get('username', '')
+    nome = request.POST.get('nome', '')
+    usuario = User.objects.filter(username = username)
+
+
+    if not usuario.exists() :
+        mail = username + email_dominio
+        password = User.objects.make_random_password(length=5, allowed_chars='abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789')
+        usuario = User.objects.create_user(username, mail, password)
+
+        responsavel  = Responsavel.objects.create(DjangoUser=usuario, Nome=nome)
+
+        email = EmailMessage('Registro em WMP', 'Caro ' + responsavel.Nome +
+                             ' Voce se cadastrou com sucesso!'
+                             'Nome de usuario: ' + usuario.username + ' e senha: ' + password + ' Por favor acesse: ' + pagina + '/login/', settings.EMAIL_HOST_USER, [usuario.email])
+        email.send()
+
+        return render_to_response('sucesso.html')
+
+    else:
+        return HttpResponseRedirect('/invalid')
 
 @login_required
 def mudar_senha_view(request):
@@ -113,7 +142,13 @@ def logout(request):
 def Psicologo_view(request):
     template = loader.get_template('Psicologo.html')
 
+    perfil = Responsavel.objects.filter(DjangoUser=request.user)
+
+    if not perfil.exists():
+        perfil = ''
+
     context = {
+        'perfil': perfil,
         'user': request.user,
         'clientes': Cliente.objects.filter(Orientador=request.user)
     }
@@ -346,8 +381,8 @@ def create_report(request, WebKey):
     menu_pdf = SimpleDocTemplate(buff, pagesize=letter, rightMargin=72,
                                  leftMargin=72, topMargin=40, bottomMargin=18)
 
-    logo = "./Feedbacks/static/images/logo.png"
-    im = Image(logo, 2 * cm, 2 * cm, hAlign='RIGHT')
+    logo = "./Feedbacks/static/images/wmfb.png"
+    im = Image(logo, 2 * cm, 2 * cm, hAlign='LEFT')
 
     styles = getSampleStyleSheet()
     styles.add(ParagraphStyle(name='centered', alignment=TA_CENTER))
