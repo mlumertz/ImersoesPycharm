@@ -163,9 +163,9 @@ def Psicologo_view(request):
 @login_required
 def novo_cliente_view(request):
 
-    if request.method == 'POST':
+    form = ClienteForm(request.user, request.POST or None)
 
-        form = ClienteForm(request.user, request.POST)
+    if request.method == 'POST':
 
         if form.is_valid():
             cliente = form.save()
@@ -185,7 +185,7 @@ def novo_cliente_view(request):
 
     args = {}
     args.update(csrf(request))
-    args['form'] = ClienteForm(request.user)
+    args['form'] = form
     return render_to_response('novo_cliente.html', args)
 
 @login_required
@@ -262,6 +262,7 @@ def cadastro_indicados_view(request, WebKey):
                 cat.cliente = cliente
                 cat.save()
                 categoria = CategoriaInputForm()
+
         else:
             if formset.is_valid():
                 indicados = formset.save()
