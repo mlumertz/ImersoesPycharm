@@ -41,6 +41,7 @@ from reportlab.pdfgen.canvas import Canvas
 from io import BytesIO
 
 
+
 # Create your views here.
 pagina = 'http://127.0.0.1:8000'
 email_dominio = '@gmail.com' #TODO mudar depois para @wmfb.com.br
@@ -49,7 +50,7 @@ def login(request):
     if request.user.is_authenticated():
         update_StatusDeadline(request.user) #TODO mudar depois !!! usar cron
         return HttpResponseRedirect('/Psicologo')
-    c = {}
+    c = {'invalid': False}
     c.update(csrf(request))
     return render_to_response('login.html', c)
 
@@ -64,7 +65,10 @@ def auth_view(request):
         return HttpResponseRedirect('/Psicologo')
 
     else:
-        return HttpResponseRedirect('/invalid')
+        c = {'invalid': True}
+        c.update(csrf(request))
+        return render_to_response("login.html", c)  # our template can detect this variable
+        #return HttpResponseRedirect('/invalid')
 
 def novo_usuario_view(request):
     c = {}

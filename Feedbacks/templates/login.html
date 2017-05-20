@@ -23,6 +23,11 @@
             <input type="checkbox" value="remember-me"> Lembre-me 
           </label>
         </div> -->
+
+      {% if invalid %}
+              <p style="color:red;">Usuário ou senha inválidos<br></p>
+      {% endif %}
+
         <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
       <p></p>
         <div class="col-sm-7"><a href="/password_reset/">Esqueceu sua senha? </a></div>
