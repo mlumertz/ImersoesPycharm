@@ -43,7 +43,7 @@ from io import BytesIO
 
 
 # Create your views here.
-pagina = 'http://127.0.0.1:8000'
+pagina = 'http://127.0.0.1:8000' #TODO mudar depois para pagina dominio
 email_dominio = '@gmail.com' #TODO mudar depois para @wmfb.com.br
 
 def login(request):
@@ -89,15 +89,16 @@ def criar_novo_usuario_view(request):
 
         responsavel  = Responsavel.objects.create(DjangoUser=usuario, Nome=nome)
 
-        email = EmailMessage('Registro em WMP', 'Caro ' + responsavel.Nome +
-                             ' Voce se cadastrou com sucesso!'
-                             'Nome de usuario: ' + usuario.username + ' e senha: ' + password + ' Por favor acesse: ' + pagina + '/login/', settings.EMAIL_HOST_USER, [usuario.email])
+        subject = 'Registro em WMP'
+        mensagem = 'Caro ' + responsavel.Nome + ' Voce se cadastrou com sucesso!'  'Nome de usuario: ' + usuario.username + ' e senha: ' + password + ' Por favor acesse: ' + pagina + '/login/'
+
+        email = EmailMessage(subject, mensagem, settings.EMAIL_HOST_USER, [usuario.email])
         email.send()
 
-        return render_to_response('sucesso.html')
+        return render_to_response('loading_page.html') #TODO pagina de sucesso no registro
 
     else:
-        return HttpResponseRedirect('/invalid')
+        return HttpResponseRedirect('/invalid') #TODO pagina de registro invalido
 
 @login_required
 def mudar_senha_view(request):
@@ -146,10 +147,7 @@ def logout(request):
 def Psicologo_view(request):
     template = loader.get_template('Psicologo.html')
 
-    perfil = Responsavel.objects.filter(DjangoUser=request.user)
-
-    if not perfil.exists():
-        perfil = ''
+    perfil, created = Responsavel.objects.get_or_create(DjangoUser=request.user)
 
     context = {
         'perfil': perfil,
@@ -169,15 +167,15 @@ def novo_cliente_view(request):
 
         if form.is_valid():
             cliente = form.save()
-
-            ct1 = Categoria(cat="Amigos", cliente=cliente)
-            ct1.save()
-            ct2 = Categoria(cat="Familia", cliente=cliente)
-            ct2.save()
-            ct3 = Categoria(cat="Universidade", cliente=cliente)
-            ct3.save()
-            ct4 = Categoria(cat="Trabalho", cliente=cliente)
-            ct4.save()
+            #
+            # ct1 = Categoria(cat="Amigos", cliente=cliente)
+            # ct1.save()
+            # ct2 = Categoria(cat="Familia", cliente=cliente)
+            # ct2.save()
+            # ct3 = Categoria(cat="Universidade", cliente=cliente)
+            # ct3.save()
+            # ct4 = Categoria(cat="Trabalho", cliente=cliente)
+            # ct4.save()
 
             email_cliente(request, cliente.WebKey)
 
@@ -187,6 +185,28 @@ def novo_cliente_view(request):
     args.update(csrf(request))
     args['form'] = form
     return render_to_response('novo_cliente.html', args)
+
+@login_required
+def editar_cliente_view(request, WebKey):
+
+    cliente = get_object_or_404(Cliente, WebKey=WebKey)
+    form = ClienteForm(request.POST or None, instance=cliente)
+
+
+    if request.method == 'POST':
+
+        if form.is_valid():
+            cliente = form.save()
+
+            email_cliente(request, cliente.WebKey)
+
+            return HttpResponseRedirect('/Psicologo')
+
+    args = {}
+    args.update(csrf(request))
+    args['form'] = form
+    args['cliente'] = cliente
+    return render_to_response('edit_cliente.html', args)
 
 @login_required
 def perfil_view(request):
@@ -337,9 +357,22 @@ def email_indicados(request, WebKey):
 
     cliente = get_object_or_404(Cliente, WebKey=WebKey)
     indicados = Indicado.objects.filter(cliente=cliente)
+    subject = 'WMFB - Processo de Feedback'
+    template = get_template('email_indicado.html')
 
     for indicado in indicados:
-        email = EmailMessage('Caro '+ indicado.Nome, ' Voce foi indicado por: ' + cliente.Nome + ' para responder um questionario sobre o mesmo! Por favor acesse: ' + pagina + '/Indicado/' + str(indicado.WebKey), settings.EMAIL_HOST_USER, [indicado.Email])
+
+        ctx = {
+            'indicado': indicado.Nome,
+            'cliente': cliente.Nome,
+            'link': pagina + '/Indicado/' + str(indicado.WebKey),
+            'data': cliente.Deadline,
+        }
+
+        message = template.render(Context(ctx))
+
+        email = EmailMessage(subject, message, settings.EMAIL_HOST_USER, [indicado.Email])
+        email.content_subtype = 'html'
         email.send()
 
     return render_to_response('sucesso.html')
@@ -372,8 +405,8 @@ def update_StatusDeadline(user):
 
 def create_report(request, WebKey):
 
-    cliente = Cliente.objects.get_or_404(WebKey=WebKey)
-    pdfName = "report_%s.pdf" % cliente.Nome
+    cliente = get_object_or_404(Cliente, WebKey=WebKey)
+    pdfName = "relatorio_cliente_%s.pdf" % cliente.Nome
 
     # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
@@ -381,7 +414,6 @@ def create_report(request, WebKey):
 
     buff = BytesIO()
     # Create the PDF object, using the response object as its "file."
-
 
     menu_pdf = SimpleDocTemplate(buff, pagesize=letter, rightMargin=72,
                                  leftMargin=72, topMargin=40, bottomMargin=18)
@@ -393,29 +425,52 @@ def create_report(request, WebKey):
     styles.add(ParagraphStyle(name='centered', alignment=TA_CENTER))
     styles.add(ParagraphStyle(name='justify', alignment=TA_JUSTIFY))
 
+
+    responsavel = Responsavel.objects.get(DjangoUser=cliente.Orientador)
+
+
     # container for pdf elements
     elements = []
 
     elements.append(im)
+    elements.append(Spacer(1, 25))
     elements.append(Paragraph("Relatório de Respostas Compiladas", styles["Title"]))
     elements.append(Spacer(1, 25))
-    elements.append(Paragraph("Orientador: %s" % cliente.Orientador.username, styles["Normal"]))
-    elements.append(Spacer(1, 6))
-    elements.append(Paragraph("Cliente: %s" % cliente.Nome, styles["Normal"]))
-    elements.append(Spacer(1, 6))
-    elements.append(Paragraph("Tipo de Feedback: %s" % cliente.TipoDeFeedback, styles["Normal"]))
+    elements.append(Paragraph("<b> Orientador: </b>%s" % responsavel.Nome, styles["Normal"]))
+    elements.append(Paragraph("<b>Cliente: </b>%s" % cliente.Nome, styles["Normal"]))
+    elements.append(Paragraph("<b>Tipo de Feedback: </b>%s" % cliente.TipoDeFeedback, styles["Normal"]))
+    elements.append(Paragraph("<b>Nome da Atividade de Feedback: </b>%s" % cliente.FeedbackNome, styles["Normal"]))
+    elements.append(Paragraph("<b>Data: </b>%s" % cliente.Deadline, styles["Normal"]))
     elements.append(Spacer(1, 25))
-    elements.append(Paragraph("Pergunta 01:", styles["Normal"]))
+    elements.append(Paragraph("%s" % cliente.Pergunta1, styles["Heading5"]))
+
+    categs = Categoria.objects.filter(cliente = cliente)
+
+    for categ in categs:
+        ind_categoria = Indicado.objects.filter(Categ=categ)
+        if ind_categoria.exists():
+            elements.append(Spacer(1, 3))
+            elements.append(Paragraph("%s" % categ.cat,
+                                      styles["Definition"]))
+
+            for ind in ind_categoria:
+                elements.append(Paragraph("%s" %ind.Resposta1,
+                styles["Code"]))
+
+
     elements.append(Spacer(1, 12))
-    elements.append(Paragraph(
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        styles["Definition"]))
-    elements.append(Spacer(1, 12))
-    elements.append(Paragraph("Pergunta 02: ", styles["Normal"]))
-    elements.append(Spacer(1, 12))
-    elements.append(Paragraph(
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        styles["Definition"]))
+    elements.append(Paragraph("%s" %cliente.Pergunta2, styles["Heading5"]))
+
+
+    for categ in categs:
+        ind_categoria = Indicado.objects.filter(Categ=categ)
+        if ind_categoria.exists():
+            elements.append(Spacer(1, 3))
+            elements.append(Paragraph("%s" % categ.cat,
+                                      styles["Definition"]))
+            for ind in ind_categoria:
+                elements.append(Paragraph("%s" % ind.Resposta2,
+                                          styles["Code"]))
 
     menu_pdf.build(elements)
     response.write(buff.getvalue())

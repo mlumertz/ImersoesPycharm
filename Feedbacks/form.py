@@ -13,8 +13,8 @@ from functools import partial
 
 DateInput = partial(forms.DateInput, {'class': 'form-control datepicker', 'placeholder': "dd/mm/aaaa", 'input_formats': '%d-%m-%Y'})
 
-Pergunta1 = "Quais são as principais qualidades ?"
-Pergunta2 = "Quais são as principais oportunidades de melhorias?"
+Pergunta1_fix = "Quais são as principais qualidades de "
+Pergunta2_fix = "Quais são as principais oportunidades de melhorias de "
 
 
 class ClienteForm(ModelForm):
@@ -27,14 +27,20 @@ class ClienteForm(ModelForm):
     Deadline = forms.DateField(widget=DateInput(), label="")
 
     TipoDeFeedback = forms.ChoiceField(label="",
-                                       widget=forms.Select( attrs = {'class': "form-control", }),
+                                       widget=forms.Select( attrs = {'class': "form-control", 'id':'tipoFeedback'}),
                                        choices=Cliente.FEEDBACK_CHOICES)
 
     FeedbackNome = forms.CharField(max_length=50, label="",
                            widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nome do Questionario"}), )
+
+    Pergunta1 = forms.CharField(max_length=300, label="", required=False,
+                           widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Digite sua pergunta customizada"}), )
+
+    Pergunta2 = forms.CharField(max_length=300, label="", required=False,
+                           widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Digite sua pergunta customizada"}), )
     class Meta:
         model = Cliente
-        fields = ['Nome', 'Email', 'TipoDeFeedback', 'Deadline', 'FeedbackNome']
+        fields = ['Nome', 'Email', 'TipoDeFeedback', 'Deadline', 'FeedbackNome', 'Pergunta1', 'Pergunta2']
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
@@ -42,12 +48,19 @@ class ClienteForm(ModelForm):
 
     def save(self, commit=True):
         cliente = super(ClienteForm, self).save(commit=False)
+
         cliente.Orientador = self.user
-        cliente.Pergunta1 = Pergunta1
-        cliente.Pergunta2 = Pergunta2
+
+        value = cliente.TipoDeFeedback
+
+
+        cliente.Pergunta1 = Pergunta1_fix
+        cliente.Pergunta2 = Pergunta2_fix
+
 
         if commit:
             cliente.save()
+
         return cliente
 
 

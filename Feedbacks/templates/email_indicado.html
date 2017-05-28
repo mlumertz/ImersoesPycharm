@@ -1,7 +1,6 @@
-﻿
 <!DOCTYPE html>
-{% load staticfiles %} 
-<html lang="pt-br">
+{% load staticfiles %}
+<html lang="pt">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +19,7 @@
 
     <!-- Bootstrap -->
 	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    
+
     <!-- Custom styles for this template -->
     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
     <link href="{% static 'css/sticky-footer-navbar.css' %}" rel="stylesheet">
@@ -40,42 +39,9 @@
     <![endif]-->
 
           <link rel="stylesheet" href="/static/css/style.css">
-
-    <style>
-        .loader {
-            border: 16px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 16px solid #3498db;
-            width: 120px;
-            height: 120px;
-            -webkit-animation: spin 2s linear infinite;
-            animation: spin 2s linear infinite;
-        }
-
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
 </head>
 
-</head>
 <body>
-
-{% block nav %}
 
       <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -85,20 +51,11 @@
         </div>
       </div>
     </nav>
-    
- {% endblock %}    
 
-    <div id="content">
-    
-	{% if messages %}
-	<ul class="messages">
-	    {% for message in messages %}
-	    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-	    {% endfor %}
-	</ul>
-	{% endif %}
-	</div>
-    {% block content %}This is the content area{% endblock %}
+      <h3> Caro {{ indicado }}</h3>
+      <p> Você foi indicado por: {{ cliente }} para responder um questionario sobre o mesmo! Por favor acesse a página abaixo para responder o mesmo: </p>
+      <p> {{ link }}</p>
+      <p> A data limite é {{ data }}</p>
 
     <hr>
    	 <nav class="navbar  navbar-fixed-bottom navbar-inverse">
@@ -106,5 +63,8 @@
         <p class="text-muted text-center">Copyright &copy; 2017 &middot; Todos os direitos reservados &middot; <a href="http://www.imersoes.com.br/" >www.imersoes.com.br</a></p>
       </div>
     </nav>
+
 </body>
 </html>
+
+

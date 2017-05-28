@@ -22,6 +22,8 @@ admin.autodiscover()
 
 from django.contrib.auth.views import password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
@@ -34,6 +36,7 @@ urlpatterns = [
     url(r'^Psicologo$', views.Psicologo_view),
     url(r'^Psicologo/novo_cliente/$', views.novo_cliente_view),
     url(r'^Psicologo/novo_usuario/$', views.novo_usuario_view),
+    url(r'^Psicologo/editar_cliente/(?P<WebKey>[0-9a-z-]+)$', views.editar_cliente_view),
     url(r'^Psicologo/create/$', views.criar_novo_usuario_view),
     # url(r'^Cliente/(?P<WebKey>[0-9a-z-]+)$', views.cliente_view, name = 'cliente' ),
     url(r'^Cliente/sucesso/$', views.sucesso),
@@ -42,7 +45,7 @@ urlpatterns = [
     url(r'^Psicologo/mudar_senha/$', views.mudar_senha_view),
     url(r'^Psicologo/perfil/$', views.perfil_view),
     url(r'^Psicologo/auth_mudar_senha/$', views.auth_mudar_senha_view),
-    url(r'^password_reset/$', password_reset, {'post_reset_redirect': '/password/reset/done/'},
+    url(r'^password_reset/$', auth_views.password_reset, {'post_reset_redirect': '/password/reset/done/'},
         name="password_reset"),
     url(r'^password/reset/done/$', password_reset_done),
     url(r'^password/reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
