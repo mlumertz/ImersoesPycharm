@@ -10,7 +10,11 @@
     <div class="jumbotron">
       <div class="container">
         <h1>Bem vindo, {{user.username}} !</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        <p>Você está participando de um processo de {{user.FeedbackNome}} com o(a) psicólogo(a) {{user.Orientador.Nome}}.
+            Por favor, indique ao menos 3 pessoas de seu convívio por categoria (preferêncialmente preencher 3 categorias).
+            Estas pessoas receberão acesso a um questionário por e-mail com perguntas sobre você. Caso necessário, você
+            pode adicionar outras categorias de sua preferência.</p>
+          <p>Seus indicados terão até o dia {{ user.Deadline }} para enviar as respostas.</p>
       </div>
     </div>
             <form class="form-singin" method="post"> {% csrf_token %}
