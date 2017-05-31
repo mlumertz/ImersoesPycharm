@@ -9,12 +9,12 @@
 
         <div class="jumbotron">
             <div class="container">
-                <h2>Bem vindo, {{ cliente.Nome }} </h2>
-       <p>Você está participando de um processo de {{cliente.FeedbackNome}} com o(a) psicólogo(a) {{cliente.Orientador.Nome}}.
-            Por favor, indique ao menos 3 pessoas de seu convívio por categoria (preferêncialmente preencher 3 categorias).
+                <h3>Bem vindo, {{ cliente.Nome }}. </h3>
+            <p class="text-justify">Você está participando de um processo de {{cliente.FeedbackNome}} com o(a) psicólogo(a) {{perfil.Nome}}.
+            Por favor, indique ao menos 3 pessoas de seu convívio por categoria (preferencialmente preencher 3 categorias).
             Estas pessoas receberão acesso a um questionário por e-mail com perguntas sobre você. Caso necessário, você
             pode adicionar outras categorias de sua preferência.</p>
-          <p>Seus indicados terão até o dia {{ cliente.Deadline }} para enviar as respostas.</p>
+            <p> Seus indicados terão até o dia {{ cliente.Deadline }} para enviar as respostas.</p>
             </div>
         </div>
 

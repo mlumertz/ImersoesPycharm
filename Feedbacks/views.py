@@ -149,6 +149,24 @@ def Psicologo_view(request):
 
     perfil, created = Responsavel.objects.get_or_create(DjangoUser=request.user)
 
+    clientes = Cliente.objects.filter(Orientador=request.user)
+
+    for client in clientes:
+        indicados  = Indicado.objects.filter(cliente=client)
+        allCount = 0.0
+        doneCount = 0.0
+        for indic in indicados:
+            if (indic.Status):
+                doneCount = doneCount+1
+
+            allCount = allCount+1
+        if allCount == 0:
+            client.ProgressBar = 0
+        else:
+            client.ProgressBar = (doneCount/allCount) * 100
+
+        client.save()
+
     context = {
         'perfil': perfil,
         'user': request.user,
@@ -167,15 +185,15 @@ def novo_cliente_view(request):
 
         if form.is_valid():
             cliente = form.save()
-            #
-            # ct1 = Categoria(cat="Amigos", cliente=cliente)
-            # ct1.save()
-            # ct2 = Categoria(cat="Familia", cliente=cliente)
-            # ct2.save()
-            # ct3 = Categoria(cat="Universidade", cliente=cliente)
-            # ct3.save()
-            # ct4 = Categoria(cat="Trabalho", cliente=cliente)
-            # ct4.save()
+
+            ct1 = Categoria(cat="Amigos", cliente=cliente)
+            ct1.save()
+            ct2 = Categoria(cat="Familia", cliente=cliente)
+            ct2.save()
+            ct3 = Categoria(cat="Universidade", cliente=cliente)
+            ct3.save()
+            ct4 = Categoria(cat="Trabalho", cliente=cliente)
+            ct4.save()
 
             email_cliente(request, cliente.WebKey)
 
@@ -247,7 +265,9 @@ def indicado_view(request, WebKey):
         form = IndicadoPageForm(request.POST, instance=indicado)
 
         if form.is_valid():
-            form.save()
+            indicado = form.save()
+            indicado.Status = True
+            indicado.save()
             return render_to_response('sucesso.html')
 
     else:
@@ -264,6 +284,8 @@ def cadastro_indicados_view(request, WebKey):
 
     cliente = get_object_or_404(Cliente, WebKey=WebKey)
     psicologo = cliente.Orientador
+    perfil, created = Responsavel.objects.get_or_create(DjangoUser=psicologo)
+
     path = '/Cliente/%s' % WebKey
 
     # if cliente.Status:
@@ -299,6 +321,7 @@ def cadastro_indicados_view(request, WebKey):
     args['categoria'] = categoria
     args['cliente'] = cliente
     args['responsavel'] = psicologo
+    args['perfil'] = perfil
 
     return render_to_response( 'cadastro_indicados.html', args)
 

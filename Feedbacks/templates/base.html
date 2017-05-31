@@ -1,5 +1,4 @@
-﻿﻿
-<!DOCTYPE html>
+﻿
 {% load staticfiles %} 
 <html lang="pt-br">
 <head>
@@ -19,10 +18,10 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
     <!-- Bootstrap -->
-	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     
     <!-- Custom styles for this template -->
-    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <!--<link href="{% static 'css/signin.css' %}" rel="stylesheet"> -->
     <link href="{% static 'css/sticky-footer-navbar.css' %}" rel="stylesheet">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -37,7 +36,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-          <link rel="stylesheet" href="/static/css/style.css">
+        <!--  <link rel="stylesheet" href="/static/css/style.css"> -->
 </head>
 
 <body>
@@ -48,8 +47,8 @@
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+            <span class="icon-bar"> </span>
+            <span class="icon-bar"> </span>
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="http://imersoes.com.br/"><img style="max-height:100px" src="{% static 'images/wmfb.png' %}" ></a>
@@ -57,10 +56,10 @@
         <div id="navbar" class="navbar-collapse collapse navbar-right">
            <ul class="nav navbar-nav">
             <li class="active"><a href="#">Início</a></li>
-               <li><a href="Psicologo/novo_cliente/">Novo Feedback</a></li>
-               <li><a href="Psicologo/perfil/">Perfil</a></li>
-            <li><a href="/Psicologo/mudar_senha/">Mudar Senha</a></li>
-            <li><a href="/logout/">Log out</a></li>
+               <li class="center-block"><a href="../Psicologo/novo_cliente/">Novo Feedback</a></li>
+               <li><a href="../Psicologo/perfil/">Perfil</a></li>
+            <li><a href="../Psicologo/mudar_senha/">Mudar Senha</a></li>
+            <li><a href="../logout/">Log out</a></li>
           </ul>
         </div><!--/.navbar-collapse -->
       </div>
@@ -68,7 +67,7 @@
 {% endblock %}
 
     <div id="content">
-    
+
 	{% if messages %}
 	<ul class="messages">
 	    {% for message in messages %}
@@ -79,7 +78,6 @@
 	</div>
     {% block content %}This is the content area{% endblock %}
 
-    <hr>
    	 <footer class="footer navbar-inverse navbar-fixed-bottom">
       <div class="container">
         <p class="text-muted text-center">Copyright &copy; 2017 &middot; Todos os direitos reservados &middot; <a href="http://www.imersoes.com.br/" >www.imersoes.com.br</a></p>

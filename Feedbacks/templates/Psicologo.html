@@ -6,17 +6,17 @@
 
 
 {% block content %}
-    <div class="container">
+    <div class="container theme-showcase">
         <div class="jumbotron">
             <div class="container">
-                <h2>Bem vindo, {{ perfil.Nome }} !</h2>
-                <p class="text-justify">Esta é sua página de gerenciamento de seus processos de Feedback.</p>
+                <h2>Bem vindo, {{ perfil.Nome }}!</h2>
+                <p class="text-justify"> Esta é sua página de gerenciamento de seus processos de Feedback. </p>
             </div>
         </div>
 
         <div class="container text-center">
             <h3>Processos de Feedback</h3>
-        <p></p>
+        <br>
 
             <table class="table table-condensed table-hover table-condensed">
                 <tr>
@@ -25,8 +25,8 @@
                     <th > Nome do Processo</th>
                     <th > Tipo </th>
                     <th class="text-center"> Status</th>
-                    <th class="text-center"> Data Limite</th>
                     <th class="text-center"> Progresso</th>
+                    <th class="text-center"> Data Limite</th>
                     <th class="text-center"> Ações</th>
                 </tr>
                 {% for cliente in clientes %}
@@ -45,15 +45,16 @@
                             <span class="glyphicon glyphicon-remove" style="color:red"> </span>
                         {% endif %} </th>
 
-                        <th><h5 class="text-center"> {{ cliente.Deadline }} </h5></th>
 
                         <th class="text-center">
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ cliente.ProgressBar }}" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ cliente.ProgressBar }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ cliente.ProgressBar }}%">
                                     {{ cliente.ProgressBar }}%
                                 </div>
                             </div>
                         </th>
+
+                        <th><h5 class="text-center"> {{ cliente.Deadline }} </h5></th>
 
                         <th class="text-center">
                             <a href="Psicologo/editar_cliente/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-pencil"></span></a>
@@ -62,9 +63,9 @@
                             {% else %} <span class="glyphicon glyphicon-time" style="color:green"> </span>
                             {% endif %}
 
-                            {% if cliente.StatusDeadline %} <a href="pdf/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-download-alt"> </span></a>
-                            {% else %}  <span class="glyphicon glyphicon-download-alt"> </span>
-                            {% endif %}
+                            <a href="pdf/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-download-alt"> </span></a>
+                            <!--<span class="glyphicon glyphicon-download-alt"> </span> -->
+
 
                             {% if cliente.Status %}  <span class="glyphicon glyphicon-envelope"> </span>
                             {% else %} <a href="EmailCliente/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-envelope"> </span></a>

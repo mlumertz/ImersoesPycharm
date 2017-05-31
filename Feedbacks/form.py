@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# !/usr/bin/env python
+# -*- coding: utf-8 -*
 
 from django import forms
 from django.contrib.auth.models import User
@@ -11,16 +11,16 @@ from django.forms import inlineformset_factory
 
 from functools import partial
 
-DateInput = partial(forms.DateInput, {'class': 'form-control datepicker', 'placeholder': "dd/mm/aaaa", 'input_formats': '%d-%m-%Y'})
+DateInput = partial(forms.DateInput, {'class': 'form-control datepicker', 'placeholder': "dd/mm/aaaa", 'input_formats': '%m-%d-%y'})
 
-Pergunta1_fix = "Quais são as principais qualidades de "
-Pergunta2_fix = "Quais são as principais oportunidades de melhorias de "
+Pergunta1_fix = "Quais são as principais qualidades de %s?"
+Pergunta2_fix = "Quais são as principais oportunidades de melhorias de %s?"
 
 
 class ClienteForm(ModelForm):
 
     Nome = forms.CharField(max_length=60, label="",
-                           widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nome e Sobrenome"}), )
+                           widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nome e Sobrenome", 'id': 'nome'}), )
     Email = forms.EmailField(label="",
                              widget=forms.EmailInput(attrs={'class': "form-control", 'placeholder': "E-mail"}), )
 
@@ -53,15 +53,25 @@ class ClienteForm(ModelForm):
 
         value = cliente.TipoDeFeedback
 
+        if value == Cliente.fb1:
 
-        cliente.Pergunta1 = Pergunta1_fix
-        cliente.Pergunta2 = Pergunta2_fix
+            pergunta1= Pergunta1_fix % (cliente.Nome)
+            pergunta2= Pergunta2_fix % (cliente.Nome)
+            cliente.Pergunta1 = pergunta1
+            cliente.Pergunta2 = pergunta2
+        elif value == Cliente.fb2:
+            pergunta1= Pergunta1_fix % (cliente.Nome)
+            pergunta2= Pergunta2_fix % (cliente.Nome)
+            cliente.Pergunta1 = pergunta1
+            cliente.Pergunta2 = pergunta2
 
 
         if commit:
             cliente.save()
 
         return cliente
+
+
 
 
 class ResponsavelForm(ModelForm):
