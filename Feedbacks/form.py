@@ -1,5 +1,4 @@
-# !/usr/bin/env python
-# -*- coding: utf-8 -*
+# -*- coding: UTF-8 -*
 
 from django import forms
 from django.contrib.auth.models import User
@@ -11,10 +10,10 @@ from django.forms import inlineformset_factory
 
 from functools import partial
 
-DateInput = partial(forms.DateInput, {'class': 'form-control datepicker', 'placeholder': "dd/mm/aaaa", 'input_formats': '%m-%d-%y'})
+DateInput = partial(forms.DateInput, {'class': 'form-control datepicker', 'placeholder': "dd/mm/aaaa"})
 
-Pergunta1_fix = "Quais são as principais qualidades de %s?"
-Pergunta2_fix = "Quais são as principais oportunidades de melhorias de %s?"
+Pergunta1_fix = "Quais sao as principais qualidades de %s?"
+Pergunta2_fix = "Quais sao as principais oportunidades de melhorias de %s?"
 
 
 class ClienteForm(ModelForm):

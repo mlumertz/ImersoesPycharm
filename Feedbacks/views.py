@@ -260,6 +260,7 @@ def indicado_view(request, WebKey):
     indicado = get_object_or_404(Indicado, WebKey=WebKey)
     cliente = indicado.cliente
     psicologo = cliente.Orientador
+    perfil, created = Responsavel.objects.get_or_create(DjangoUser=psicologo)
 
     if request.method == 'POST':
         form = IndicadoPageForm(request.POST, instance=indicado)
@@ -276,7 +277,8 @@ def indicado_view(request, WebKey):
         args['form'] = IndicadoPageForm(instance=indicado)
         args['indicado'] = indicado
         args['cliente'] = cliente
-        args['responsavel'] = psicologo
+        args['perfil'] = perfil
+        args['psicologo'] = psicologo
         return render_to_response('indicado.html', args)
 
 
@@ -292,7 +294,7 @@ def cadastro_indicados_view(request, WebKey):
     #     return render_to_response('sucesso.html')
 
 
-    cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=1)
+    cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=0, min_num=3, validate_min=True,)
     formset = cliente_formsetFactory(request.POST or None, instance=cliente, form_kwargs={'cliente': cliente})
     categoria = CategoriaInputForm( request.POST or None)
 
@@ -429,7 +431,7 @@ def update_StatusDeadline(user):
 def create_report(request, WebKey):
 
     cliente = get_object_or_404(Cliente, WebKey=WebKey)
-    pdfName = "relatorio_cliente_%s.pdf" % cliente.Nome
+    pdfName = "relatorio_anonimo_cliente_%s.pdf" % cliente.Nome
 
     # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
@@ -456,8 +458,8 @@ def create_report(request, WebKey):
     elements = []
 
     elements.append(im)
-    elements.append(Spacer(1, 25))
-    elements.append(Paragraph("Relatório de Respostas Compiladas", styles["Title"]))
+    elements.append(Spacer(1, 10))
+    elements.append(Paragraph("Relatório da Atividade Feedback", styles["Title"]))
     elements.append(Spacer(1, 25))
     elements.append(Paragraph("<b> Orientador: </b>%s" % responsavel.Nome, styles["Normal"]))
     elements.append(Paragraph("<b>Cliente: </b>%s" % cliente.Nome, styles["Normal"]))
@@ -465,16 +467,17 @@ def create_report(request, WebKey):
     elements.append(Paragraph("<b>Nome da Atividade de Feedback: </b>%s" % cliente.FeedbackNome, styles["Normal"]))
     elements.append(Paragraph("<b>Data: </b>%s" % cliente.Deadline, styles["Normal"]))
     elements.append(Spacer(1, 25))
-    elements.append(Paragraph("%s" % cliente.Pergunta1, styles["Heading5"]))
+    elements.append(Paragraph("01. %s" % cliente.Pergunta1, styles["Heading5"]))
 
     categs = Categoria.objects.filter(cliente = cliente)
 
     for categ in categs:
         ind_categoria = Indicado.objects.filter(Categ=categ)
         if ind_categoria.exists():
-            elements.append(Spacer(1, 3))
-            elements.append(Paragraph("%s" % categ.cat,
-                                      styles["Definition"]))
+            total = ind_categoria.filter(Status=True).count()
+            elements.append(Spacer(1, 8))
+            elements.append(Paragraph("%s (%s respostas)" % (categ.cat, total),
+                                      styles["Normal"]))
 
             for ind in ind_categoria:
                 elements.append(Paragraph("%s" %ind.Resposta1,
@@ -482,19 +485,105 @@ def create_report(request, WebKey):
 
 
     elements.append(Spacer(1, 12))
-    elements.append(Paragraph("%s" %cliente.Pergunta2, styles["Heading5"]))
+    elements.append(Paragraph("02. %s" %cliente.Pergunta2, styles["Heading5"]))
 
 
     for categ in categs:
         ind_categoria = Indicado.objects.filter(Categ=categ)
         if ind_categoria.exists():
-            elements.append(Spacer(1, 3))
-            elements.append(Paragraph("%s" % categ.cat,
-                                      styles["Definition"]))
+            total = ind_categoria.filter(Status=True).count()
+            elements.append(Spacer(1, 8))
+            elements.append(Paragraph("%s (%s respostas)" % (categ.cat, total),
+                                      styles["Normal"]))
             for ind in ind_categoria:
                 elements.append(Paragraph("%s" % ind.Resposta2,
                                           styles["Code"]))
 
+    elements.append(Spacer(1, 18))
+    total = Indicado.objects.filter(Status=True, cliente=cliente).count()
+    elements.append(Paragraph("<b>Total de Partipantes: </b>%s" % total, styles["Normal"]))
+    menu_pdf.build(elements)
+    response.write(buff.getvalue())
+    buff.close()
+    return response
+
+def create_complete_report(request, WebKey):
+
+    cliente = get_object_or_404(Cliente, WebKey=WebKey)
+    pdfName = "relatorio_completo_cliente_%s.pdf" % cliente.Nome
+
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=%s' % pdfName
+
+    buff = BytesIO()
+    # Create the PDF object, using the response object as its "file."
+
+    menu_pdf = SimpleDocTemplate(buff, pagesize=letter, rightMargin=72,
+                                 leftMargin=72, topMargin=40, bottomMargin=18)
+
+    logo = "./Feedbacks/static/images/wmfb.png"
+    im = Image(logo, 2 * cm, 2 * cm, hAlign='LEFT')
+
+    styles = getSampleStyleSheet()
+    styles.add(ParagraphStyle(name='centered', alignment=TA_CENTER))
+    styles.add(ParagraphStyle(name='justify', alignment=TA_JUSTIFY))
+
+
+    responsavel = Responsavel.objects.get(DjangoUser=cliente.Orientador)
+
+    total = 0
+    # container for pdf elements
+    elements = []
+
+    elements.append(im)
+    elements.append(Spacer(1, 10))
+    elements.append(Paragraph("Relatório da Atividade Feedback", styles["Title"]))
+    elements.append(Spacer(1, 25))
+    elements.append(Paragraph("<b> Orientador: </b>%s" % responsavel.Nome, styles["Normal"]))
+    elements.append(Paragraph("<b>Cliente: </b>%s" % cliente.Nome, styles["Normal"]))
+    elements.append(Paragraph("<b>Tipo de Feedback: </b>%s" % cliente.TipoDeFeedback, styles["Normal"]))
+    elements.append(Paragraph("<b>Nome da Atividade de Feedback: </b>%s" % cliente.FeedbackNome, styles["Normal"]))
+    elements.append(Paragraph("<b>Data: </b>%s" % cliente.Deadline, styles["Normal"]))
+    elements.append(Spacer(1, 25))
+    elements.append(Paragraph("01. %s" % cliente.Pergunta1, styles["Heading5"]))
+
+    categs = Categoria.objects.filter(cliente = cliente)
+
+    for categ in categs:
+        ind_categoria = Indicado.objects.filter(Categ=categ)
+        if ind_categoria.exists():
+
+            total = ind_categoria.filter(Status=True).count()
+            elements.append(Spacer(1, 8))
+            elements.append(Paragraph("%s (%s respostas)" % (categ.cat, total),
+                                      styles["Normal"]))
+
+            for ind in ind_categoria:
+                if ind.Status:
+                    elements.append(Paragraph("<b>%s (%s):</b> %s" % (ind.Nome, ind.Email, ind.Resposta1), styles["Code"]))
+                    total = total +1
+
+
+    elements.append(Spacer(1, 12))
+    elements.append(Paragraph("02. %s" %cliente.Pergunta2, styles["Heading5"]))
+
+
+    for categ in categs:
+        ind_categoria = Indicado.objects.filter(Categ=categ)
+        if ind_categoria.exists():
+            total = ind_categoria.filter(Status=True).count()
+            elements.append(Spacer(1, 8))
+            elements.append(Paragraph("%s (%s respostas)" % (categ.cat, total),
+                                      styles["Normal"]))
+            for ind in ind_categoria:
+                if ind.Status:
+                    elements.append(Paragraph("<b>%s (%s):</b> %s" % (ind.Nome, ind.Email, ind.Resposta2), styles["Code"]))
+                    total = total + 1
+
+    elements.append(Spacer(1, 18))
+    total = Indicado.objects.filter(Status=True, cliente=cliente).count()
+    elements.append(Paragraph("<b>Total de Partipantes: </b>%s" % total, styles["Normal"]))
     menu_pdf.build(elements)
     response.write(buff.getvalue())
     buff.close()

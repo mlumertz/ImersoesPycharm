@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^Cliente/sucesso/$', views.sucesso),
     url(r'^Indicado/(?P<WebKey>[0-9a-z-]+)$', views.indicado_view, name='indicado'),
     url(r'^pdf/(?P<WebKey>[0-9a-z-]+)$', views.create_report, name='create_report'),
+    url(r'^pdf_completo/(?P<WebKey>[0-9a-z-]+)$', views.create_complete_report, name='create_complete_report'),
     url(r'^Psicologo/mudar_senha/$', views.mudar_senha_view),
     url(r'^Psicologo/perfil/$', views.perfil_view),
     url(r'^Psicologo/auth_mudar_senha/$', views.auth_mudar_senha_view),
