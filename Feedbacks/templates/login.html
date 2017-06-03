@@ -1,12 +1,26 @@
 ﻿
-{% extends "base_cliente.html" %}
+{% extends "base.html" %}
 
 {% block title %} WMP - login {% endblock %}
+
+{% block nav %}
+{% load staticfiles %}
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="http://imersoes.com.br/"><img style="max-height:100px" src="{% static 'images/wmfb.png' %}" ></a>
+{#          <a class="navbar-brand" href="http://imersoes.com.br/">Imersões</a>#}
+        </div>
+      </div>
+    </nav>
+
+ {% endblock %}
+
 {% block content %}
-<div class="container">
+<div class="form-signin">
 
   <form class="form-signin" action="/auth/" method="post">{% csrf_token %}
-        <h2 class="form-signin-heading text-center">Planejamento de Carreira</h2>
+        <h2 class="form-signin-heading text-center">FEED</h2>
         <p class="text-center"> Por favor, digite seu usuário e senha.</p>
         <label for="username" class="sr-only">Username</label>
 

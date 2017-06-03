@@ -2,10 +2,9 @@
 
 {% block title %} WMFB - Imersões {% endblock %}
 
-
+{% load staticfiles %}
 
 {% block content %}
-    <div class="container">
 
         <div class="jumbotron">
             <div class="container">
@@ -17,6 +16,8 @@
             <p> Seus indicados terão até o dia {{ cliente.Deadline }} para enviar as respostas.</p>
             </div>
         </div>
+
+    <div class="container">
 
         <form id="myForm" class="form-horizontal" method="post"> {% csrf_token %}
             <div class="row">
@@ -106,8 +107,6 @@
     <hr>
         <p class="text-right">Coordenador do Projeto: <strong>{{ perfil.Nome }}</strong> ({{ perfil.Tipo_id }} {{perfil.Id_number }}).</p>
     </div>
-
-
 
 
     {% load staticfiles %}
