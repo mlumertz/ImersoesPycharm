@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 
 from django.shortcuts import render
 from django.shortcuts import render_to_response
@@ -297,6 +296,7 @@ def cadastro_indicados_view(request, WebKey):
     cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=0, min_num=3, validate_min=True,)
     formset = cliente_formsetFactory(request.POST or None, instance=cliente, form_kwargs={'cliente': cliente})
     categoria = CategoriaInputForm( request.POST or None)
+    DoNotCheck = False
 
     if request.method == 'POST':
 
@@ -306,6 +306,7 @@ def cadastro_indicados_view(request, WebKey):
                 cat.cliente = cliente
                 cat.save()
                 categoria = CategoriaInputForm()
+                DoNotCheck = True
 
         else:
             if formset.is_valid():
@@ -315,6 +316,7 @@ def cadastro_indicados_view(request, WebKey):
                 cliente.save()
                 email_indicados(request, cliente.WebKey)
                 return render_to_response('sucesso.html')
+                DoNotCheck = False
 
 
     args = {}
@@ -324,6 +326,7 @@ def cadastro_indicados_view(request, WebKey):
     args['cliente'] = cliente
     args['responsavel'] = psicologo
     args['perfil'] = perfil
+    args['DoNotCheck'] =  DoNotCheck
 
     return render_to_response( 'cadastro_indicados.html', args)
 

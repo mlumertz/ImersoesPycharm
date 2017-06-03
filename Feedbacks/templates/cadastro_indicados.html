@@ -40,7 +40,7 @@
                         {{ form.id }}
                         <tr>
                             <th>
-                                {% if form.Nome.errors %}
+                                {% if form.Nome.errors and DoNotCheck == False%}
                                     <div class="has-error has-feedback">
                                         <h5> {{ form.Nome }} </h5>
                                         <span class="glyphicon glyphicon-remove form-control-feedback"
@@ -52,7 +52,7 @@
                                 {% endif %}
                             </th>
                             <th>
-                                {% if form.Email.errors %}
+                                {% if form.Email.errors and DoNotCheck == False %}
                                     <div class="has-error has-feedback">
                                         <h5> {{ form.Email }} </h5>
                                         <span class="glyphicon glyphicon-remove form-control-feedback"
@@ -64,7 +64,7 @@
                                 {% endif %}
                             </th>
                             <th>
-                                {% if form.Categ.errors %}
+                                {% if form.Categ.errors  and DoNotCheck == False%}
                                     <div class="has-error has-feedback">
 
                                         <h5> {{ form.Categ }} </h5>
@@ -86,7 +86,7 @@
 
                 </table>
 
-                {% if formset.errors %}
+                {% if formset.errors and DoNotCheck == False%}
                     <tr>
                         <div class="alert alert-danger" role="alert">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
