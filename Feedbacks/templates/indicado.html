@@ -6,7 +6,6 @@
 
 {% block content %}
 
-    <div class="container">
 
         <div class="jumbotron">
             <div class="container">
@@ -26,6 +25,7 @@
 
             </div>
         </div>
+
         <div class="container">
             <form class="form" action="" method="post"> {% csrf_token %}
 
@@ -45,8 +45,14 @@
                     </div>
             </form>
         </div>
+    <div class="container">
     <hr>
         <p class="text-right">Coordenador do Projeto: <strong>{{ perfil.Nome }}</strong> ({{ perfil.Tipo_id }} {{perfil.Id_number }}).</p>
-    </div> <!-- /container -->
+    <br>
+    </div>
+
+     <!-- /container -->
+
+
 
 {% endblock %}

@@ -10,10 +10,13 @@ html {
       -ms-text-size-adjust: 100%;
 }
 body {
-  padding-top: 50px;
-  padding-bottom: 40px;
+  padding-top: 70px;
+  padding-bottom: 90px;
 }
 
+section {
+  min-height: 100vh;
+}
 
 article,
 aside,
@@ -26,7 +29,6 @@ hgroup,
 main,
 menu,
 nav,
-section,
 summary {
   display: block;
 }
@@ -1292,7 +1294,7 @@ h6,
 }
 p {
   margin: 0 0 10px;
-  font-size: 14px;
+
 }
 .lead {
   margin-bottom: 20px;

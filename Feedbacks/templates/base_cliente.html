@@ -75,6 +75,7 @@
 </head>
 <body>
 
+<section>
 {% block nav %}
 
       <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -98,13 +99,35 @@
 	</ul>
 	{% endif %}
 	</div>
+
     {% block content %}This is the content area{% endblock %}
+</section>
 
+<div  class="container-fluid" style="background-color:#eee; vertical-align: middle; align-content: center" >
 
-   	 <footer class="footer navbar-inverse navbar-fixed-bottom">
+<br>
+            <div class="col-md-5 col-md-push-6">
+                <h2 class="featurette-heading">Quem Somos </h2>
+                <p class=" text-justify"> Os Imersões foram desenvolvidos em 1987, há quase 30 anos.</p>
+
+                <p class=" text-justify">Nos últimos 10 anos foram realizados centenas de cursos, seminários e workshops para membros de Famílias Empresárias. </p>
+
+                <p class=" text-justify"> Imersão, Educação e Desenvolvimento é uma empresa integrante da WMP Consultoria, com atuação diferenciada para preparar Acionistas, Herdeiros e Sucessores.</p>
+
+                <a class="btn btn-default" href="http://www.wmfb.com.br/" role="button">VISITE O SITE</a>
+            </div>
+
+                <div class="col-md-5 col-md-pull-4">
+                <img class="img-responsive center-block" style="max-height:350px" src="{% static 'images/wmp_completo.png' %}" >
+            </div>
+<br>
+</div>
+
+   	 <div class="footer navbar-inverse navbar-fixed-bottom">
       <div class="container">
+          <p class="text-center" style="color:white"><strong>Porto Alegre</strong> | (51) 3328 1241 <strong>Gramado</strong> | (54) 3286 4436</p>
         <p class="text-muted text-center">Copyright &copy; 2017 &middot; Todos os direitos reservados &middot; <a href="http://www.imersoes.com.br/" >www.imersoes.com.br</a></p>
       </div>
-     </footer>
+     </div>
 </body>
 </html>

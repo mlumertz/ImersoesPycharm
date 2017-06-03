@@ -1,8 +1,21 @@
-{% extends "base_cliente.html" %}
+{% extends "base.html" %}
 
 {% block title %} WMP - Registro  {% endblock %}
+
+{% block nav %}
+{% load staticfiles %}
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="http://imersoes.com.br/"><img style="max-height:100px" src="{% static 'images/wmfb.png' %}" ></a>
+{#          <a class="navbar-brand" href="http://imersoes.com.br/">Imersões</a>#}
+        </div>
+      </div>
+    </nav>
+
+ {% endblock %}
+
 {% block content %}
-    <div class="container">
 
         <div class="jumbotron">
             <div class="container">
@@ -46,7 +59,6 @@
         </form>
 
     </div>
-    </div> <!-- /container -->
 
 {% endblock %}
 
