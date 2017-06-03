@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^Psicologo/create/$', views.criar_novo_usuario_view),
     # url(r'^Cliente/(?P<WebKey>[0-9a-z-]+)$', views.cliente_view, name = 'cliente' ),
     url(r'^Cliente/sucesso/$', views.sucesso),
+    url(r'^Cliente/sucesso_indicado/$', views.sucesso_indicado),
     url(r'^Indicado/(?P<WebKey>[0-9a-z-]+)$', views.indicado_view, name='indicado'),
     url(r'^pdf/(?P<WebKey>[0-9a-z-]+)$', views.create_report, name='create_report'),
     url(r'^pdf_completo/(?P<WebKey>[0-9a-z-]+)$', views.create_complete_report, name='create_complete_report'),

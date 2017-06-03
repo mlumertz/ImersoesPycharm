@@ -253,6 +253,8 @@ def sucesso(request):
 
     return render_to_response('sucesso.html')
 
+def sucesso_indicado(request):
+    return render_to_response('sucesso_indicado.html')
 
 def indicado_view(request, WebKey):
 
@@ -268,7 +270,7 @@ def indicado_view(request, WebKey):
             indicado = form.save()
             indicado.Status = True
             indicado.save()
-            return render_to_response('sucesso.html')
+            return render_to_response('sucesso_indicado.html')
 
     else:
         args = {}
