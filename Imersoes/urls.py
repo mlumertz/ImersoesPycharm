@@ -43,16 +43,20 @@ urlpatterns = [
     url(r'^Cliente/sucesso_indicado/$', views.sucesso_indicado),
     url(r'^Indicado/(?P<WebKey>[0-9a-z-]+)$', views.indicado_view, name='indicado'),
     url(r'^pdf/(?P<WebKey>[0-9a-z-]+)$', views.create_report, name='create_report'),
-    url(r'^pdf_completo/(?P<WebKey>[0-9a-z-]+)$', views.create_complete_report, name='create_complete_report'),
+    url(r'^pdf_completo/(?P<WebKey>[0-9a-z-]+)$', views.create_complete_report, name='create_compmidrlete_report'),
     url(r'^Psicologo/mudar_senha/$', views.mudar_senha_view),
     url(r'^Psicologo/perfil/$', views.perfil_view),
     url(r'^Psicologo/auth_mudar_senha/$', views.auth_mudar_senha_view),
-    url(r'^password_reset/$', auth_views.password_reset, {'post_reset_redirect': '/password/reset/done/'},
+
+
+    url(r'^password_reset/$', auth_views.password_reset, {'template_name': 'registration/password_reset_form.html'},
         name="password_reset"),
-    url(r'^password/reset/done/$', password_reset_done),
+    url(r'^password/reset/done/$', auth_views.password_reset_done, {'template_name': 'registration/password_reset_done.html'}, name='password_reset_done'),
     url(r'^password/reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
-        password_reset_confirm, {'post_reset_redirect': '/password/done/'}, name='password_reset_confirm'),
-    url(r'^password/done/$', password_reset_complete),
+        auth_views.password_reset_confirm, {'post_reset_redirect': '/password/done/', 'template_name': 'registration/password_reset_confirm.html'}, name='password_reset_confirm'),
+    url(r'^password/done/$', auth_views.password_reset_complete, {'template_name': 'registration/password_reset_complete.html'}, name='password_reset_complete'),
+
+
     url(r'^Cliente/(?P<WebKey>[0-9a-z-]+)$', views.cadastro_indicados_view, name='cliente'),
     url(r'^DeletarCliente/(?P<WebKey>[0-9a-z-]+)$', views.delete_cliente ),
     url(r'^nova_categoria/(?P<WebKey>[0-9a-z-]+)$', views.nova_categoria_view),
