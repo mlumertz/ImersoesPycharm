@@ -112,6 +112,7 @@ class IndicadoForm(ModelForm):
         super(IndicadoForm, self).__init__(*args, **kwargs)
         self.fields['Categ'].queryset = Categoria.objects.filter(cliente=cliente)
         self.fields['Categ'].empty_label = 'Selecionar uma Categoria...'
+        self.empty_permitted = False
 
 
 
