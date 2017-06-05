@@ -470,7 +470,7 @@ def create_report(request, WebKey):
     elements.append(Paragraph("<b>Cliente: </b>%s" % cliente.Nome, styles["Normal"]))
     elements.append(Paragraph("<b>Tipo de Feedback: </b>%s" % cliente.TipoDeFeedback, styles["Normal"]))
     elements.append(Paragraph("<b>Nome da Atividade de Feedback: </b>%s" % cliente.FeedbackNome, styles["Normal"]))
-    elements.append(Paragraph("<b>Data: </b>%s" % cliente.Deadline, styles["Normal"]))
+    elements.append(Paragraph("<b>Data: </b>%s" % cliente.Deadline.strftime('%d/%m/%y'), styles["Normal"]))
     elements.append(Spacer(1, 25))
     elements.append(Paragraph("01. %s" % cliente.Pergunta1, styles["Heading5"]))
 
@@ -549,7 +549,7 @@ def create_complete_report(request, WebKey):
     elements.append(Paragraph("<b>Cliente: </b>%s" % cliente.Nome, styles["Normal"]))
     elements.append(Paragraph("<b>Tipo de Feedback: </b>%s" % cliente.TipoDeFeedback, styles["Normal"]))
     elements.append(Paragraph("<b>Nome da Atividade de Feedback: </b>%s" % cliente.FeedbackNome, styles["Normal"]))
-    elements.append(Paragraph("<b>Data: </b>%s" % cliente.Deadline, styles["Normal"]))
+    elements.append(Paragraph("<b>Data: </b>%s" % cliente.Deadline.strftime('%d/%m/%y'), styles["Normal"]))
     elements.append(Spacer(1, 25))
     elements.append(Paragraph("01. %s" % cliente.Pergunta1, styles["Heading5"]))
 

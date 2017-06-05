@@ -116,10 +116,18 @@
         <!--</body>
       </html>-->
 
+
+
     <script>
+        $.datepicker.setDefaults($.datepicker.regional['pr-BR']);
         $(document).ready(function () {
-            $('.datepicker').datepicker();
+            $('.datepicker').datepicker({
+            numberOfMonths: 1,
+            showButtonPanel: true,
+            dateFormat : 'dd/mm/yy' });
+
         });
+
     </script>
 
     <script>
