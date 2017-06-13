@@ -84,6 +84,12 @@
           <a class="navbar-brand" href="http://imersoes.com.br/"><img style="max-height:100px" src="{% static 'images/wmfb.png' %}" ></a>
 {#          <a class="navbar-brand" href="http://imersoes.com.br/">Imersões</a>#}
         </div>
+          <div id="navbar" class="navbar-collapse collapse navbar-right" style="vertical-align:middle">
+           <ul class="nav navbar-nav">
+            <li class="active"><a href="#quem_somos">Quem Somos</a></li>
+           </ul>
+          </div>
+
       </div>
     </nav>
     
@@ -103,7 +109,7 @@
     {% block content %}This is the content area{% endblock %}
 </section>
 
-<div  class="container-fluid" style="background-color:#eee; vertical-align: middle; align-content: center" >
+<div  id="quem_somos" class="container-fluid" style="background-color:#eee; vertical-align: middle; align-content: center" >
 
 <br>
             <div class="col-md-5 col-md-push-6">

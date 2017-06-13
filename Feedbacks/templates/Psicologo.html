@@ -40,7 +40,7 @@
                         <th><h5 > {{ cliente.TipoDeFeedback }} </h5></th>
 
                         <th class="text-center">  {% if cliente.Status %}
-                            <span class="glyphicon glyphicon-ok" style="color:green"> </span>
+                            <span class="glyphicon glyphicon-ok" style="color:green" data-toggle="tooltip" data-placement="top" title="Esse icone determina se seu cliente já cadastrou seus indicados com sucesso"> </span>
                         {% else %}
                             <span class="glyphicon glyphicon-remove" style="color:red"> </span>
                         {% endif %} </th>
@@ -72,7 +72,7 @@
                             {% else %} <a href="EmailCliente/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-envelope"> </span></a>
                             {% endif %}
 
-                            <a href="DeletarCliente/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-trash"> </span></a>
+                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-trash" > </span></button>
                         </th>
                     </tr>
                 {% endfor %}
@@ -84,12 +84,43 @@
             </div>
 
         </div>
+
+
+    <!-- Modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
+
+
 
     <script>
         $(document).ready(function () {
             $('.datepicker').datepicker();
         });
+
+        $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
     </script>
 <!--</body>
 </html>-->
