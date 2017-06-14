@@ -39,6 +39,8 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen.canvas import Canvas
 from io import BytesIO
 
+from django.templatetags.static import static
+
 
 
 # Create your views here.
@@ -448,7 +450,7 @@ def create_report(request, WebKey):
     menu_pdf = SimpleDocTemplate(buff, pagesize=letter, rightMargin=72,
                                  leftMargin=72, topMargin=40, bottomMargin=18)
 
-    logo = "./Feedbacks/static/images/wmfb.png"
+    logo = static('images/wmfb.png')
     im = Image(logo, 2 * cm, 2 * cm, hAlign='LEFT')
 
     styles = getSampleStyleSheet()
@@ -527,8 +529,8 @@ def create_complete_report(request, WebKey):
     menu_pdf = SimpleDocTemplate(buff, pagesize=letter, rightMargin=72,
                                  leftMargin=72, topMargin=40, bottomMargin=18)
 
-    #logo = "./Feedbacks/static/images/wmfb.png"
-    #im = Image(logo, 2 * cm, 2 * cm, hAlign='LEFT')
+    logo = static('images/wmfb.png')
+    im = Image(logo, 2 * cm, 2 * cm, hAlign='LEFT')
 
     styles = getSampleStyleSheet()
     styles.add(ParagraphStyle(name='centered', alignment=TA_CENTER))
