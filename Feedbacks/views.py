@@ -529,8 +529,8 @@ def create_complete_report(request, WebKey):
     menu_pdf = SimpleDocTemplate(buff, pagesize=letter, rightMargin=72,
                                  leftMargin=72, topMargin=40, bottomMargin=18)
 
-    logo = static('images/wmfb.png')
-    im = Image(logo, 2 * cm, 2 * cm, hAlign='LEFT')
+    #logo = static('images/wmfb.png')
+    #im = Image(logo, 2 * cm, 2 * cm, hAlign='LEFT')
 
     styles = getSampleStyleSheet()
     styles.add(ParagraphStyle(name='centered', alignment=TA_CENTER))
@@ -543,7 +543,7 @@ def create_complete_report(request, WebKey):
     # container for pdf elements
     elements = []
 
-    elements.append(im)
+    #elements.append(im)
     elements.append(Spacer(1, 10))
     elements.append(Paragraph("Relatório da Atividade Feedback", styles["Title"]))
     elements.append(Spacer(1, 25))
