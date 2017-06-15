@@ -12,6 +12,7 @@ html {
 body {
   padding-top: 70px;
   padding-bottom: 90px;
+  min-height: min-content;
 }
 
 section {
