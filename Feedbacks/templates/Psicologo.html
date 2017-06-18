@@ -73,7 +73,7 @@
                             {% else %} <a href="EmailCliente/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-envelope"> </span></a>
                             {% endif %}
 
-                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-trash" > </span></button>
+                            <a href="DeletarCliente/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-trash"> </span></a>
                         </th>
                     </tr>
                 {% endfor %}
