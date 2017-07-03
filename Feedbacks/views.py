@@ -374,11 +374,11 @@ def email_cliente(request, WebKey):
     }
 
     subject = 'WMFB - Processo de Feedback'
-    template = get_template('email_cliente.html')
-    message = template.render(Context(ctx))
+    # template = get_template('email_cliente.html')
+    # message = template.render(Context(ctx))
 
-    email = EmailMessage(subject, message, settings.EMAIL_HOST_USER, [cliente.Email])
-    email.content_subtype = 'html'
+    email = EmailMessage(subject, 'teste', settings.EMAIL_HOST_USER, [cliente.Email])
+    # email.content_subtype = 'html'
     email.send()
 
     return HttpResponseRedirect('/Psicologo')
