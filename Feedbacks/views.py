@@ -44,7 +44,7 @@ from django.templatetags.static import static
 
 
 # Create your views here.
-pagina = 'http://127.0.0.1:8000' #TODO mudar depois para pagina dominio
+pagina = 'http://wmfbfeedback2.jelasticlw.com.br/'
 email_dominio = '@gmail.com' #TODO mudar depois para @wmfb.com.br
 
 def login(request):
@@ -375,7 +375,7 @@ def email_cliente(request, WebKey):
 
     subject = 'WMFB - Processo de Feedback'
     template = get_template('email_cliente.html')
-    message = template.render(Context(ctx))
+    message = template.render(ctx)
 
     email = EmailMessage(subject, message, settings.EMAIL_HOST_USER, [cliente.Email])
     email.content_subtype = 'html'
@@ -401,7 +401,7 @@ def email_indicados(request, WebKey):
             'data': cliente.Deadline,
         }
 
-        message = template.render(Context(ctx))
+        message = template.render(ctx)
 
         email = EmailMessage(subject, message, settings.EMAIL_HOST_USER, [indicado.Email])
         email.content_subtype = 'html'
