@@ -12,8 +12,12 @@ from functools import partial
 
 DateInput = partial(forms.DateInput, {'class': 'form-control datepicker', 'placeholder': "dd/mm/aaaa"})
 
-Pergunta1_fix = "Quais sao as principais qualidades de %s?"
-Pergunta2_fix = "Quais sao as principais oportunidades de melhorias de %s?"
+Pergunta1_pre = " Quais são as principais qualidades (forças) de %s?"
+Pergunta2_pre = "Quais são as principais oportunidades de melhorias (fraquezas) de %s?"
+
+
+Pergunta1_pos = "Quais são as principais forças que %s tem demonstrado no último ano? Existem algumas cenas que possam exemplificar os argumentos?"
+Pergunta2_pos = "Quais são as principais oportunidades de desenvolvimento para %s ? Existem algumas cenas que possam exemplificar os argumentos?"
 
 
 class ClienteForm(ModelForm):
@@ -54,13 +58,13 @@ class ClienteForm(ModelForm):
 
         if value == Cliente.fb1:
 
-            pergunta1= Pergunta1_fix % (cliente.Nome)
-            pergunta2= Pergunta2_fix % (cliente.Nome)
+            pergunta1= Pergunta1_pre % (cliente.Nome)
+            pergunta2= Pergunta2_pre % (cliente.Nome)
             cliente.Pergunta1 = pergunta1
             cliente.Pergunta2 = pergunta2
         elif value == Cliente.fb2:
-            pergunta1= Pergunta1_fix % (cliente.Nome)
-            pergunta2= Pergunta2_fix % (cliente.Nome)
+            pergunta1= Pergunta1_pos % (cliente.Nome)
+            pergunta2= Pergunta2_pos % (cliente.Nome)
             cliente.Pergunta1 = pergunta1
             cliente.Pergunta2 = pergunta2
 

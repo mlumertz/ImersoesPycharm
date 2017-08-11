@@ -11,17 +11,23 @@
             <div class="container">
                 <h3>Bem vindo, {{ indicado.Nome }}!</h3>
                 <p></p>
-                <p class="text-justify h6"> Estamos realizando um <u>{{ cliente.FeedbackNome }}</u> com <strong>{{ cliente.Nome }}</strong>. </p>
-                <p class="text-justify h6">  Nesse processo, fazemos uma atividade intitulada Feedback, na qual {{ cliente.Nome }}
-                    deve indicar nomes de pessoas importantes para a sua carreira, as quais poderiam fornecer suas percepções sobre ele.
-                    Assim, solicitamos que você responda da maneira mais completa possível, fornecendo exemplos, ao questionário abaixo. </p>
 
-                <p class="text-justify h6"> A confidencialidade é muito importante nesse processo.
-                    Sendo assim, as informações serão tabuladas e apresentadas para {{ cliente.Nome }} sem a identificação da pessoa que forneceu o Feedback.
-                    Trata-se de uma das atividades mais importantes desse processo e poucas pessoas foram escolhidas.
-                    Agradecemos a colaboração! </p>
+            {% if cliente.TipoDeFeedback == "Pos-Coaching" %}
 
-                <p class="text-justify h6"> Lembrando que a data limite de resposta é <strong>{{ cliente.Deadline }}</strong>.  </p>
+              <p class="text-justify h6"> Somos uma Consultoria especializada em desenvolver Famílias Empresárias. O meu nome é <strong>{{ perfil.Nome }}</strong>
+                , sou Psicóloga, e estou realizando um Processo de <u>{{ cliente.FeedbackNome }}</u> com <strong>{{ cliente.Nome }}</strong>. Nesse processo, fazemos uma atividade intitulada
+                    feedback, no qual <strong>{{ perfil.Nome }}</strong> deve indicar nomes de pessoas
+                    importantes para a sua carreira, as quais poderiam fornecer suas percepções sobre ela. Assim, solicito que você responda da maneira mais completa possível, fornecendo
+                    exemplos, às seguintes perguntas:
+
+            {% else %}
+
+                <p class="text-justify h6"> O meu nome é <strong>{{ perfil.Nome }}</strong>
+                , sou Psicóloga, e estou realizando um Processo de <u>{{ cliente.FeedbackNome }}</u> com <strong>{{ cliente.Nome }}</strong>. Nesse processo, fazemos uma atividade intitulada
+                feedback, no qual <strong>{{ perfil.Nome }}</strong> deve indicar nomes de pessoas importantes para a sua carreira que estão acompanhando a sua carreira no último ano, as quais poderiam
+                fornecer suas percepções recentes sobre ele. Assim, solicito que você responda da maneira mais completa possível, fornecendo exemplos, às seguintes perguntas:
+
+            {% endif %}
 
             </div>
         </div>
@@ -46,8 +52,17 @@
             </form>
         </div>
     <div class="container">
+
+        <p class="text-justify h6"> A confidencialidade é muito importante nesse processo.
+                    Sendo assim, as informações serão tabuladas e apresentadas para {{ cliente.Nome }} sem a identificação da pessoa que forneceu o Feedback.
+                    Trata-se de uma das atividades mais importantes desse processo e poucas pessoas foram escolhidas. Assim, solicito especial atenção a este questionário.
+                    Estarei aguardando a resposta até o dia <strong>{{ cliente.Deadline }}</strong>. </p>
+
     <hr>
-        <p class="text-right">Coordenador do Projeto: <strong>{{ perfil.Nome }}</strong> ({{ perfil.Tipo_id }} {{perfil.Id_number }}).</p>
+        <p class="text-right">Agradecemos a colaboração!
+        <p class="text-right">Atenciosamente,</p>
+        <p class="text-right"><strong>{{ perfil.Nome }}</strong> </p>
+        <p class="text-right">({{ perfil.Tipo_id }} {{perfil.Id_number }})</p>.
     <br>
     </div>
 
@@ -56,3 +71,82 @@
 
 
 {% endblock %}
+
+
+
+
+
+ <!--               <h3>Bem vindo, {{ indicado.Nome }}!</h3>
+                <p></p>
+                <p class="text-justify h6"> Estamos realizando um <u>{{ cliente.FeedbackNome }}</u> com <strong>{{ cliente.Nome }}</strong>. </p>
+                <p class="text-justify h6">  Nesse processo, fazemos uma atividade intitulada Feedback, na qual {{ cliente.Nome }}
+                    deve indicar nomes de pessoas importantes para a sua carreira, as quais poderiam fornecer suas percepções sobre ele.
+                    Assim, solicitamos que você responda da maneira mais completa possível, fornecendo exemplos, ao questionário abaixo. </p>
+
+                <p class="text-justify h6"> A confidencialidade é muito importante nesse processo.
+                    Sendo assim, as informações serão tabuladas e apresentadas para {{ cliente.Nome }} sem a identificação da pessoa que forneceu o Feedback.
+                    Trata-se de uma das atividades mais importantes desse processo e poucas pessoas foram escolhidas.
+                    Agradecemos a colaboração! </p>
+
+                <p class="text-justify h6"> Lembrando que a data limite de resposta é <strong>{{ cliente.Deadline }}</strong>.  </p>
+
+Cara XXXX
+
+Espero que este e-mail a encontre muito bem!
+Somos uma Consultoria especializada em desenvolver Famílias
+Empresárias. O meu nome é Daniela Forgiarini Pereira, sou Psicóloga, e estou
+realizando um Processo de Coaching com XXXXXX. Nesse processo, fazemos uma
+atividade intitulada Feedback, na qual XXXXX deve indicar nomes de pessoas
+importantes para a sua carreira, as quais poderiam fornecer suas percepções sobre ela.
+Assim, solicito que você responda da maneira mais completa possível, fornecendo
+exemplos, às seguintes perguntas:
+ 
+1) Quais são as principais qualidades de XXXXX (forças)?
+2) Quais são as principais oportunidades de melhorias (fraquezas) de XXXXX?
+ 
+
+As informações serão tabuladas e apresentadas sem a identificação da
+
+pessoa que forneceu o Feedback.
+ 
+
+Trata-se de uma das atividades mais importantes desse processo e poucas
+pessoas foram escolhidas. Assim, solicito especial atenção ao retorno desse e-mail.
+Estarei aguardando a resposta até o dia XX/XX/XXXX.
+
+ 
+
+Agradecemos a colaboração!
+ 
+Atenciosamente,
+ 
+Daniela Forgiarini Pereira
+CRP 07/12056
+
+Cara XXXXX
+
+Espero que este e-mail a encontre muito bem!
+Meu nome é Daniela Forgiarini Pereira, sou Psicóloga, e estou realizando
+um Processo de Coaching com XXXXXX. Nesse processo, fazemos uma atividade
+intitulada Feedback, no qual XXXXX deve indicar nomes de pessoas importantes para a
+sua carreira que estão acompanhando a sua carreira no último ano, as quais poderiam
+fornecer suas percepções recentes sobre ele. Assim, solicito que você responda da
+maneira mais completa possível, fornecendo exemplos, às seguintes perguntas:
+
+1) Quais são as principais forças que XXXXX tem demonstrado no último ano?
+Existem algumas cenas que possam exemplificar os argumentos?
+2) Quais são as principais oportunidades de desenvolvimento para XXXX? Existem
+algumas cenas que possam exemplificar os argumentos?
+
+As informações serão tabuladas e apresentadas sem a identificação da
+
+pessoa que forneceu o Feedback.
+
+Trata-se de uma das atividades mais importantes desse processo e poucas
+pessoas foram escolhidas. Assim, solicito especial atenção ao retorno desse e-mail.
+Estarei aguardando a resposta até o dia XX/XX/XXXX, na medida do possível.
+Agradecemos a colaboração!
+Atenciosamente,
+Daniela Forgiarini Pereira
+CRP 07/12056
+-->
