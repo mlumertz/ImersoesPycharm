@@ -374,11 +374,11 @@ def email_cliente(request, WebKey):
     }
 
     subject = 'WMFB - Processo de Feedback'
-    # template = get_template('email_cliente.html')
-    # message = template.render(Context(ctx))
+    template = get_template('email_cliente.html')
+    message = template.render(Context(ctx))
 
-    email = EmailMessage(subject, 'teste', settings.EMAIL_HOST_USER, [cliente.Email])
-    # email.content_subtype = 'html'
+    email = EmailMessage(subject, message, settings.EMAIL_HOST_USER, [cliente.Email])
+    email.content_subtype = 'html'
     email.send()
 
     return HttpResponseRedirect('/Psicologo')
@@ -450,7 +450,7 @@ def create_report(request, WebKey):
     menu_pdf = SimpleDocTemplate(buff, pagesize=letter, rightMargin=72,
                                  leftMargin=72, topMargin=40, bottomMargin=18)
 
-    logo = static('images/wmfb.png')
+    logo = settings.STATIC_ROOT + 'images/wmfb.png'
     im = Image(logo, 2 * cm, 2 * cm, hAlign='LEFT')
 
     styles = getSampleStyleSheet()
@@ -529,7 +529,7 @@ def create_complete_report(request, WebKey):
     menu_pdf = SimpleDocTemplate(buff, pagesize=letter, rightMargin=72,
                                  leftMargin=72, topMargin=40, bottomMargin=18)
 
-    logo = 'static/wmfb.png'
+    logo = settings.STATIC_ROOT + 'images/wmfb.png'
     im = Image(logo, 2 * cm, 2 * cm, hAlign='LEFT')
 
     styles = getSampleStyleSheet()
@@ -543,7 +543,7 @@ def create_complete_report(request, WebKey):
     # container for pdf elements
     elements = []
 
-    #elements.append(im)
+    elements.append(im)
     elements.append(Spacer(1, 10))
     elements.append(Paragraph("Relatório da Atividade Feedback", styles["Title"]))
     elements.append(Spacer(1, 25))
