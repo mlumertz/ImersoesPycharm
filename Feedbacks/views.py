@@ -45,7 +45,7 @@ from django.templatetags.static import static
 
 # Create your views here.
 pagina = 'http://wmfbfeedback2.jelasticlw.com.br/'
-email_dominio = '@gmail.com #TODO mudar depois para @wmfb.com.br
+email_dominio = '@gmail.com' #TODO mudar depois para @wmfb.com.br
 
 def login(request):
     if request.user.is_authenticated():
