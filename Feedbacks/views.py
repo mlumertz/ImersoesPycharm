@@ -44,7 +44,7 @@ from django.templatetags.static import static
 
 
 # Create your views here.
-pagina = 'http://127.0.0.1:8000' #TODO mudar depois para pagina dominio
+pagina = settings.ALLOWED_HOSTS #TODO mudar depois para pagina dominio
 email_dominio = '@gmail.com' #TODO mudar depois para @wmfb.com.br
 
 def login(request):
