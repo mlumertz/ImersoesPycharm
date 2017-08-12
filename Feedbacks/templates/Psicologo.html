@@ -41,15 +41,15 @@
                         <th><h5 > {{ cliente.TipoDeFeedback }} </h5></th>
 
                         <th class="text-center">  {% if cliente.Status %}
-                            <span class="glyphicon glyphicon-ok" style="color:green" data-toggle="tooltip" data-placement="top" title="Esse icone determina se seu cliente já cadastrou seus indicados com sucesso"> </span>
+                            <span class="glyphicon glyphicon-ok" style="color:green" data-toggle="tooltip" data-placement="top" title="Orientando já preencheu seus Contatos da Atividade de Feedback com Sucesso."> </span>
                         {% else %}
-                            <span class="glyphicon glyphicon-remove" style="color:red"> </span>
+                            <span class="glyphicon glyphicon-remove" style="color:red" data-toggle="tooltip" data-placement="top" title="Orientando ainda NÃO preencheu seus Contatos da Atividade de Feedback."> </span>
                         {% endif %} </th>
 
 
                         <th class="text-center">
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ cliente.ProgressBar }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ cliente.ProgressBar }}%">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ cliente.ProgressBar }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ cliente.ProgressBar }}%" data-toggle="tooltip" title="A barra de progresso representa a poercentagem de Contatos já responderam o Questionário da Atividade Feedback">
                                     {{ cliente.ProgressBar }}%
                                 </div>
                             </div>
@@ -58,22 +58,22 @@
                         <th><h5 class="text-center"> {{ cliente.Deadline }} </h5></th>
 
                         <th class="text-center">
-                            <a href="Psicologo/editar_cliente/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="Psicologo/editar_cliente/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Editar Atividade de Feedback"></span></a>
 
-                            {% if cliente.StatusDeadline %} <span class="glyphicon glyphicon-time" style="color:red"> </span>
-                            {% else %} <span class="glyphicon glyphicon-time" style="color:green"> </span>
+                            {% if cliente.StatusDeadline %} <span class="glyphicon glyphicon-time" style="color:red" data-toggle="tooltip" data-placement="top" title="A atividade de Feedback atingiu Data Limite e se encontra ENCERRADA. "> </span>
+                            {% else %} <span class="glyphicon glyphicon-time" style="color:green" data-toggle="tooltip" data-placement="top" title="A atividade de Feedback se encontra ATIVA."> </span>
                             {% endif %}
 
-                            <a href="pdf/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-download-alt"> </span></a>
+                            <a href="pdf/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-download-alt" data-toggle="tooltip" data-placement="top" title="Gerar relatório ANÔNIMO da Atividade de Feedback."> </span></a>
                             <!--<span class="glyphicon glyphicon-download-alt"> </span> -->
 
-                            <a href="pdf_completo/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-download-alt"> </span></a>
+                            <a href="pdf_completo/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-download-alt" data-toggle="tooltip" data-placement="top" title="Gerar relatório DESCRIMINADO da Atividade de Feedback."> </span></a>
 
-                            {% if cliente.Status %}  <span class="glyphicon glyphicon-envelope"> </span>
-                            {% else %} <a href="EmailCliente/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-envelope"> </span></a>
+                            {% if cliente.Status %}  <span class="glyphicon glyphicon-envelope" data-toggle="tooltip" data-placement="top" title="Orientando já preencheu seus Contatos da Atividade de Feedback."> </span>
+                            {% else %} <a href="EmailCliente/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-envelope" data-toggle="tooltip" data-placement="top" title="Enviar lembrete para Orientando sobre Atividade de Feedback pendente." > </span></a>
                             {% endif %}
 
-                            <a href="DeletarCliente/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-trash"> </span></a>
+                            <a href="DeletarCliente/{{ cliente.WebKey }}"> <span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="top" title="Deletar Atividade de Feedback. Todos os dados serão removidos."> </span></a>
                         </th>
                     </tr>
                 {% endfor %}
@@ -99,7 +99,13 @@
         $('#myModal').on('shown.bs.modal', function () {
   $('#myInput').focus()
 })
+
+        $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
+
+
 <!--</body>
 </html>-->
 

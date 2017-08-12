@@ -14,6 +14,7 @@
 
     <title>{% block title %}My Base Template{% endblock %}</title>
 
+
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
@@ -29,6 +30,9 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://jquery-ui.googlecode.com/svn-history/r3982/trunk/ui/i18n/jquery.ui.datepicker-pt-BR.js"></script>
     <script src="bootstrap.js"></script>
+
+
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -53,7 +57,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse navbar-right" style="vertical-align:middle">
            <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Início</a></li>
+            <li><a href="http://wmfbfeedback2.jelasticlw.com.br/Psicologo/">Home</a></li>
                <li class="center-block"><a href="http://wmfbfeedback2.jelasticlw.com.br/Psicologo/novo_cliente/">Novo Feedback</a></li>
                <li><a href="http://wmfbfeedback2.jelasticlw.com.br/Psicologo/perfil/">Perfil</a></li>
             <li><a href="http://wmfbfeedback2.jelasticlw.com.br/Psicologo/mudar_senha/">Mudar Senha</a></li>
@@ -85,11 +89,13 @@
       </div>
      </footer>
 
+    <script>
+        $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+    </script>
+
 </body>
-<script>
-    $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})</script>
 
 
 </html>

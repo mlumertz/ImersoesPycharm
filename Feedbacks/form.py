@@ -12,12 +12,14 @@ from functools import partial
 
 DateInput = partial(forms.DateInput, {'class': 'form-control datepicker', 'placeholder': "dd/mm/aaaa"})
 
-Pergunta1_pre = " Quais são as principais qualidades (forças) de %s?"
-Pergunta2_pre = "Quais são as principais oportunidades de melhorias (fraquezas) de %s?"
+Pergunta1_pre = u" Quais são as principais qualidades (forças) de %s?"
+Pergunta2_pre = u"Quais são as principais oportunidades de melhorias (fraquezas) de %s?"
 
 
-Pergunta1_pos = "Quais são as principais forças que %s tem demonstrado no último ano? Existem algumas cenas que possam exemplificar os argumentos?"
-Pergunta2_pos = "Quais são as principais oportunidades de desenvolvimento para %s ? Existem algumas cenas que possam exemplificar os argumentos?"
+Pergunta1_pos = u"Quais são as principais forças que %s tem demonstrado no último ano? Existem algumas cenas que" \
+                u" possam exemplificar os argumentos?"
+Pergunta2_pos = u"Quais são as principais oportunidades de desenvolvimento para %s ? Existem algumas cenas que possam" \
+                u" exemplificar os argumentos?"
 
 
 class ClienteForm(ModelForm):
