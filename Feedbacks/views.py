@@ -91,12 +91,12 @@ def criar_novo_usuario_view(request):
         responsavel  = Responsavel.objects.create(DjangoUser=usuario, Nome=nome)
 
         subject = 'Registro em WMP'
-        mensagem = 'Caro ' + responsavel.Nome + ' Voce se cadastrou com sucesso!'  'Nome de usuario: ' + usuario.username + ' e senha: ' + password + ' Por favor acesse: ' + pagina + '/login/'
+        mensagem = 'Caro ' + responsavel.Nome + ', \n Você se cadastrou com sucesso! \n \n'  'Nome de usuário: ' + usuario.username + '\n Senha: ' + password + '\n \n Por favor acesse: ' + pagina + '/login/'
 
         email = EmailMessage(subject, mensagem, settings.EMAIL_HOST_USER, [usuario.email])
         email.send()
 
-        return render_to_response('loading_page.html') #TODO pagina de sucesso no registro
+        return render_to_response('login.html') #TODO pagina de sucesso no registro
 
     else:
         return HttpResponseRedirect('/invalid') #TODO pagina de registro invalido
@@ -262,6 +262,10 @@ def indicado_view(request, WebKey):
 
     indicado = get_object_or_404(Indicado, WebKey=WebKey)
     cliente = indicado.cliente
+
+    if cliente.Deadline < date.today():
+        return render_to_response('DeadlineAtingido.html')
+
     psicologo = cliente.Orientador
     perfil, created = Responsavel.objects.get_or_create(DjangoUser=psicologo)
 
@@ -293,8 +297,11 @@ def cadastro_indicados_view(request, WebKey):
 
     path = '/Cliente/%s' % WebKey
 
-    # if cliente.Status:
-    #     return render_to_response('sucesso.html')
+    if cliente.Deadline < date.today():
+        return render_to_response('DeadlineAtingido.html')
+
+    if cliente.Status:
+        return render_to_response('sucesso.html')
 
 
     cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=0, min_num=3, validate_min=True,)
