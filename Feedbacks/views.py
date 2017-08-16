@@ -91,7 +91,8 @@ def criar_novo_usuario_view(request):
         responsavel  = Responsavel.objects.create(DjangoUser=usuario, Nome=nome)
 
         subject = 'Registro em WMP'
-        mensagem = 'Caro ' + responsavel.Nome + ', \n Você se cadastrou com sucesso! \n \n'  'Nome de usuário: ' + usuario.username + '\n Senha: ' + password + '\n \n Por favor acesse: ' + pagina + '/login/'
+
+        mensagem = "Caro %s, \n Você se cadastrou com sucesso! \n \n Nome de usuário:  %s\n Senha: %s \n \n Por favor acesse:  %s/login/" % (responsavel.Nome, usuario.username, password, pagina)
 
         email = EmailMessage(subject, mensagem, settings.EMAIL_HOST_USER, [usuario.email])
         email.send()
