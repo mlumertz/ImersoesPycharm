@@ -122,6 +122,7 @@ def auth_mudar_senha_view(request):
     if CheckUser is not None:
         if (NewPassword == NewPassword2):
             request.user.set_password(NewPassword)
+            request.user.save()
             return HttpResponseRedirect('/Psicologo')
 
     messages = "Senha invalida, tente novamente"
