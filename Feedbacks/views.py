@@ -92,12 +92,12 @@ def criar_novo_usuario_view(request):
 
         subject = 'Registro em WMP'
 
-        mensagem = "Caro %s, \n Você se cadastrou com sucesso! \n \n Nome de usuário:  %s\n Senha: %s \n \n Por favor acesse:  %s/login/" % (responsavel.Nome, usuario.username, password, pagina)
+        mensagem = u"Caro %s, \n \n Você se cadastrou com sucesso seu usuário no sistema FEED! \n \n Nome de usuário:  %s\n Senha: %s \n \n Por favor acesse:  %slogin/ \n" % (responsavel.Nome, usuario.username, password, pagina)
 
         email = EmailMessage(subject, mensagem, settings.EMAIL_HOST_USER, [usuario.email])
         email.send()
 
-        return render_to_response('login.html') #TODO pagina de sucesso no registro
+        return render_to_response('loading_page.html') #TODO pagina de sucesso no registro
 
     else:
         return HttpResponseRedirect('/invalid') #TODO pagina de registro invalido
