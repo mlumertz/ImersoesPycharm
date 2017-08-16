@@ -33,14 +33,14 @@ class Responsavel(models.Model):
 
 
 class Cliente(models.Model):
-    fb1 = 'Pre-Coaching'
-    fb2 = 'Pos-Coaching'
-    fb3 = 'Customizado'
+    fb1 = u'Pré-Coaching'
+    fb2 = u'Pós-Coaching'
+    fb3 = u'Customizado'
 
     FEEDBACK_CHOICES = (
-        (fb1, 'pre-coaching'),
-        (fb2, 'pos-coaching'),
-        (fb3, 'customizado'),
+        (fb1, 'Pré-Coaching'),
+        (fb2, 'Pós-Coaching'),
+        (fb3, 'Customizado'),
     )
 
     Nome = models.CharField(max_length=100)

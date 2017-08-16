@@ -372,11 +372,13 @@ def email_cliente(request, WebKey):
 
 
     cliente = get_object_or_404(Cliente, WebKey=WebKey)
+    psicologo, created = Responsavel.objects.get_or_create(DjangoUser=cliente.Orientador)
 
     ctx ={
         'cliente': cliente.Nome,
-        'responsavel': cliente.Orientador.username,
-        'link': pagina + '/Cliente/' + str(cliente.WebKey),
+        'responsavel': psicologo.Nome,
+        'link': pagina + 'Cliente/' + str(cliente.WebKey),
+        'coaching': cliente.FeedbackNome,
         'data': cliente.Deadline,
     }
 
@@ -395,6 +397,8 @@ def email_cliente(request, WebKey):
 def email_indicados(request, WebKey):
 
     cliente = get_object_or_404(Cliente, WebKey=WebKey)
+    psicologo, created = Responsavel.objects.get_or_create(DjangoUser=cliente.Orientador)
+
     indicados = Indicado.objects.filter(cliente=cliente)
     subject = 'WMFB - Processo de Feedback'
     template = get_template('email_indicado.html')
@@ -404,7 +408,9 @@ def email_indicados(request, WebKey):
         ctx = {
             'indicado': indicado.Nome,
             'cliente': cliente.Nome,
-            'link': pagina + '/Indicado/' + str(indicado.WebKey),
+            'responsavel': psicologo.Nome,
+            'coaching': cliente.FeedbackNome,
+            'link': pagina + 'Indicado/' + str(indicado.WebKey),
             'data': cliente.Deadline,
         }
 

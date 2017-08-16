@@ -14,17 +14,16 @@
 
             {% if cliente.TipoDeFeedback == "Pós-Coaching" %}
 
-                 <p class="text-justify h6"> A WMP Consultoria é uma empresa especializada em desenvolver Famílias Empresárias.
-                    Estamos realizando um <u>{{ cliente.FeedbackNome }}</u> com <strong>{{ cliente.Nome }}</strong>. </p>
+                 <p class="text-justify h6"> A WMP Consultoria é uma empresa especializada em desenvolver Famílias Empresárias. Estamos realizando um <strong>{{ cliente.FeedbackNome }}</strong> com <strong>{{ cliente.Nome }}</strong>. </p>
 
                 <p class="text-justify h6">  Nesse processo, fazemos uma atividade intitulada Feedback, na qual {{ cliente.Nome }}
                     deve indicar nomes de pessoas importantes para a sua carreira que estão acompanhando a sua trajetória no último ano, as quais poderiam
-                fornecer suas percepções recentes sobre ele.Assim, solicitamos que você responda da maneira mais completa possível, fornecendo exemplos, ao questionário abaixo. </p>
+                fornecer suas percepções recentes sobre a mesma. Assim, solicitamos que você responda da maneira mais completa possível, fornecendo exemplos, ao questionário abaixo. </p>
 
             {% else %}
 
                 <p class="text-justify h6"> A WMP Consultoria é uma empresa especializada em desenvolver Famílias Empresárias.
-                    Estamos realizando um <u>{{ cliente.FeedbackNome }}</u> com <strong>{{ cliente.Nome }}</strong>. </p>
+                    Estamos realizando um <strong>{{ cliente.FeedbackNome }}</strong> com <strong>{{ cliente.Nome }}</strong>. </p>
 
                 <p class="text-justify h6">  Nesse processo, fazemos uma atividade intitulada Feedback, na qual {{ cliente.Nome }}
                     deve indicar nomes de pessoas importantes para a sua carreira, as quais poderiam fornecer suas percepções sobre ele.

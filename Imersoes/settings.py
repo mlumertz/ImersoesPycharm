@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-*)js$0fr68qvu+7t6*(kn%4l0f+a64)c%r38vs2acgvjd!vi='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = ['wmfbfeedback2.jelasticlw.com.br', '127.0.0.1']

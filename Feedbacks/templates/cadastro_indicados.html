@@ -9,11 +9,11 @@
         <div class="jumbotron">
             <div class="container">
                 <h3>Bem vindo, {{ cliente.Nome }}. </h3>
-            <p class="text-justify">Você está participando de um processo de {{cliente.FeedbackNome}} com o(a) psicólogo(a) {{perfil.Nome}}.
-            Por favor, indique ao menos 3 pessoas de seu convívio por categoria (preferencialmente preencher 3 categorias).
+            <p class="text-justify">Você está participando de um processo de <strong>{{cliente.FeedbackNome}}</strong>  com o(a) psicólogo(a) <strong>{{perfil.Nome}}</strong>.
+                Por favor, indique ao menos 3 pessoas de seu convívio por categoria (preferencialmente preencher 3 categorias).
             Estas pessoas receberão acesso a um questionário por e-mail com perguntas sobre você. Caso necessário, você
             pode adicionar outras categorias de sua preferência.</p>
-            <p> Seus indicados terão até o dia {{ cliente.Deadline }} para enviar as respostas.</p>
+                <p> Seus indicados terão até o dia <strong>{{ cliente.Deadline }}</strong> para enviar as respostas.</p>
             </div>
         </div>
 
@@ -99,7 +99,7 @@
 
                 <div class="form-group">
                     <div class="col-md-4 col-md-offset-8 text-right">
-                        <button class="btn btn-primary" type="submit">Cadastrar Indicados</button>
+                        <button id="btnCadastro"class="btn btn-primary" type="submit">Cadastrar Indicados</button>
                     </div>
                 </div>
             </div>
@@ -120,5 +120,11 @@
                 deleteText: '<span class="glyphicon glyphicon-trash"> </span>',
             });
         })
+
+        $(document).ready(function () {
+            $('#btnCadastro').click(function () {
+                $("#btnCadastro").text('Cadastrando ....');
+            })
+        });
     </script>
 {% endblock %}

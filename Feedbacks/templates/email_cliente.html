@@ -7,25 +7,22 @@
 
 <body>
 
-{#      <nav class="navbar navbar-inverse navbar-fixed-top">#}
-{#      <div class="container-fluid">#}
-{#        <div class="navbar-header">#}
-{#          <a class="navbar-brand" href="http://imersoes.com.br/"><img style="max-height:100px" src="{% static 'images/wmfb.png' %}" ></a>#}
-{#        </div>#}
-{#      </div>#}
-{#    </nav>#}
+      <h3> Caro(a) {{ cliente }}, </h3>
+<p> A WMP Consultoria, sob coordenação de <strong>{{ responsavel }} </strong>, iniciou uma Atividade de Feedback com você. Essa Atividade faz parte do seu <strong>{{ coaching }}</strong>.</p>
+      <p> Para iniciar seu processo, por favor indique pessoas importantes para a sua carreira, as quais poderiam fornecer percepções sobre a mesma, no link abaixo: </p>
 
-      <h3> Caro {{ cliente }}</h3>
-      <p> Seu psicólogo {{ responsavel }} iniciou um processo de feedback com você! Para iniciar seu processo, por favor preencha os dados dos seus contatos na pagina abaixo: </p>
-      <p> {{ link }}</p>
-      <p> A data limite é {{ data }}</p>
+      <p> <strong>{{ link }}</strong> </p>
 
-    <hr>
-   	 <nav class="navbar  navbar-fixed-bottom navbar-inverse">
-      <div class="container">
-        <p class="text-muted text-center">Copyright &copy; 2017 &middot; Todos os direitos reservados &middot; <a href="http://www.imersoes.com.br/" >www.imersoes.com.br</a></p>
-      </div>
-    </nav>
+
+      <p> Lembramos que seus indicados terão até <strong>{{ data }}</strong> para participar da Atividade, por isso é de extrema importância que você cadastre seus indicados o quanto antes.</p>
+      <p>Se você já tiver cadastrados seus Indicados com sucesso, por favor desconsiderar esse e-mail.</p>
+<br>
+
+<p>Agradecemos a Colaboração!</p>
+
+<p><strong>WMP Consultoria</strong></p>
+
+
 
 </body>
 </html>
