@@ -384,7 +384,7 @@ def email_cliente(request, WebKey):
         'data': cliente.Deadline,
     }
 
-    subject = 'WMFB - Processo de Feedback'
+    subject = 'WMP - Processo de Feedback'
     template = get_template('email_cliente.html')
     message = template.render(ctx)
 
@@ -402,7 +402,7 @@ def email_indicados(request, WebKey):
     psicologo, created = Responsavel.objects.get_or_create(DjangoUser=cliente.Orientador)
 
     indicados = Indicado.objects.filter(cliente=cliente)
-    subject = 'WMFB - Processo de Feedback'
+    subject = 'WMP - Processo de Feedback'
     template = get_template('email_indicado.html')
 
     for indicado in indicados:

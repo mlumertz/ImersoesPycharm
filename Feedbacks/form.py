@@ -35,8 +35,9 @@ class ClienteForm(ModelForm):
                                        widget=forms.Select( attrs = {'class': "form-control", 'id':'tipoFeedback'}),
                                        choices=Cliente.FEEDBACK_CHOICES)
 
-    FeedbackNome = forms.CharField(max_length=50, label="",
-                           widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nome do Questionario"}), )
+    FeedbackNome = forms.ChoiceField(label="",
+                                       widget=forms.Select( attrs = {'class': "form-control", 'id':'nomeFeedback'}),
+                                       choices=Cliente.FEEDBACK_NAME)
 
     Pergunta1 = forms.CharField(max_length=300, label="", required=False,
                            widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Digite sua pergunta customizada"}), )
@@ -85,9 +86,9 @@ class EditClienteForm(ModelForm):
     Deadline = forms.DateField(widget=DateInput(), label="")
 
 
-    FeedbackNome = forms.CharField(max_length=50, label="",
-                           widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nome do Questionario"}), )
-
+    FeedbackNome = forms.ChoiceField(label="",
+                                       widget=forms.Select( attrs = {'class': "form-control", 'id':'nomeFeedback'}),
+                                       choices=Cliente.FEEDBACK_NAME)
 
     class Meta:
         model = Cliente

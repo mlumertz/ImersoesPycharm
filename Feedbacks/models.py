@@ -43,6 +43,15 @@ class Cliente(models.Model):
         (fb3, 'Customizado'),
     )
 
+    fn1 = u'Aconselhamento de Carreira'
+    fn2 = u'Planejamento de Carreira'
+    fn3 = u'Coaching de Carreira'
+
+    FEEDBACK_NAME = (
+        (fn1, 'Aconselhamento de Carreira'),
+        (fn2, 'Planejamento de Carreira'),
+        (fn3, 'Coaching de Carreira'),
+    )
     Nome = models.CharField(max_length=100)
 
     Email = models.EmailField()
@@ -50,8 +59,8 @@ class Cliente(models.Model):
     WebKey = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     Orientador = models.ForeignKey(User)
     Status = models.BooleanField(default=False)
-    FeedbackNome = models.CharField(max_length=50)
-    TipoDeFeedback = models.CharField(max_length=50, choices=FEEDBACK_CHOICES, default=fb1)
+    FeedbackNome = models.CharField(max_length=50, choices=FEEDBACK_NAME, default=fb1)
+    TipoDeFeedback = models.CharField(max_length=50, choices=FEEDBACK_CHOICES, default=fn1)
     Deadline = models.DateField(null=True, blank=True)
     StatusDeadline = models.BooleanField(default=False)
     Arquivo = models.FileField()
