@@ -2,22 +2,29 @@
 
 {% load staticfiles %}
 
-{% block title %} WMFB - Sistema de Feedbacks{% endblock %}
+{% block title %} WMP- Sistema de Feedbacks{% endblock %}
 
 {% block content %}
 
-    <div class="container">
+      <div class="jumbotron">
+            <div class="container">
+                    <h2 class="text-center">Mudar Senha</h2>
+                <p class="text-center">Por favor forneça sua senha atual para poder realizar a troca de senha.</p>
+                 <p class="text-center">Sua nova senha deve ser digitada duas vezes.</p>
+            </div>
+        </div>
+
+
+    <div class="form-signin">
         <form class="form-signin" action="/Psicologo/auth_mudar_senha/" method="post">
             {% csrf_token %}
-            <h2 class="form-signin-heading">Mudar Senha</h2>
 
-            <p class="form-signin-heading">{{message}}</p>
-
+            <p class="form-signin-heading" style="color:red;" >{{message}}</p>
             <label for="password" class="sr-only">SenhaAtual</label>
             <p><input type="password" id="password" name="password" class="form-control" placeholder="Senha Atual" required></p>
-            <label for="NewPassword" class="sr-only">SenhaNova</label>
+            <label for="NewPassword" class="sr-only">NovaSenha </label>
             <p><input type="password" id="password" name="NewPassword" class="form-control" placeholder="Digite a nova senha" required></p>
-            <label for="NewPassword2" class="sr-only">SenhaNova</label>
+            <label for="NewPassword2" class="sr-only">NovaSenha</label>
             <p><input type="password" id="password" name="NewPassword2" class="form-control" placeholder="Digite a nova senha novamente" required></p>
 
 

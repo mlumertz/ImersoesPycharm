@@ -211,7 +211,7 @@ def novo_cliente_view(request):
 def editar_cliente_view(request, WebKey):
 
     cliente = get_object_or_404(Cliente, WebKey=WebKey)
-    form = ClienteForm(request.POST or None, instance=cliente)
+    form = EditClienteForm(request.POST or None, instance=cliente)
 
 
     if request.method == 'POST':

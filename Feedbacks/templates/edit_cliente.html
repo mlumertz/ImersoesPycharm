@@ -3,7 +3,7 @@
 {% extends "base.html" %}
 
 
-{% block title %} WMFB - Processo de Feedback {% endblock %}
+{% block title %} WMP - Processo de Feedback {% endblock %}
 {% load staticfiles %}
 
 
@@ -104,10 +104,16 @@
         <!--</body>
       </html>-->
 
-    <script>
+<script>
+        $.datepicker.setDefaults($.datepicker.regional['pr-BR']);
         $(document).ready(function () {
-            $('.datepicker').datepicker();
+            $('.datepicker').datepicker({
+            numberOfMonths: 1,
+            showButtonPanel: true,
+            dateFormat : 'dd/mm/yy' });
+
         });
+
     </script>
 
     <script>

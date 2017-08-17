@@ -76,6 +76,23 @@ class ClienteForm(ModelForm):
 
         return cliente
 
+class EditClienteForm(ModelForm):
+
+
+    Email = forms.EmailField(label="",
+                             widget=forms.EmailInput(attrs={'class': "form-control", 'placeholder': "E-mail"}), )
+
+    Deadline = forms.DateField(widget=DateInput(), label="")
+
+
+    FeedbackNome = forms.CharField(max_length=50, label="",
+                           widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nome do Questionario"}), )
+
+
+    class Meta:
+        model = Cliente
+        fields = ['Email', 'Deadline', 'FeedbackNome', ]
+
 
 
 
