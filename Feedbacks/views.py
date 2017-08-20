@@ -45,7 +45,7 @@ from django.templatetags.static import static
 
 # Create your views here.
 pagina = 'http://wmfbfeedback2.jelasticlw.com.br/'
-email_dominio = '@gmail.com' #TODO mudar depois para @wmfb.com.br
+email_dominio = ' @wmfb.com.br'
 
 def login(request):
     if request.user.is_authenticated():
@@ -92,7 +92,7 @@ def criar_novo_usuario_view(request):
 
         subject = 'Registro em WMP'
 
-        mensagem = u"Caro %s, \n \n Você se cadastrou com sucesso seu usuário no sistema FEED! \n \n Nome de usuário:  %s\n Senha: %s \n \n Por favor acesse:  %slogin/ \n" % (responsavel.Nome, usuario.username, password, pagina)
+        mensagem = u"Caro %s, \n \n Você cadastrou com sucesso seu usuário no sistema FEED! \n \n Nome de usuário:  %s\n Senha: %s \n \n Por favor acesse:  %slogin/ \n" % (responsavel.Nome, usuario.username, password, pagina)
 
         email = EmailMessage(subject, mensagem, settings.EMAIL_HOST_USER, [usuario.email])
         email.send()
