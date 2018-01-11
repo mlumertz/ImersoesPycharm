@@ -33,13 +33,13 @@ class Responsavel(models.Model):
 
 
 class Cliente(models.Model):
-    fb1 = u'Pré-Coaching'
-    fb2 = u'Pós-Coaching'
+    fb1 = u'Feedback I'
+    fb2 = u'Feedback II'
     fb3 = u'Customizado'
 
     FEEDBACK_CHOICES = (
-        (fb1, 'Pré-Coaching'),
-        (fb2, 'Pós-Coaching'),
+        (fb1, 'Feedback I'),
+        (fb2, 'Feedback II'),
         (fb3, 'Customizado'),
     )
 
@@ -91,13 +91,13 @@ class Categoria(models.Model):
 
 class Indicado(models.Model):
     ct1 = 'Amigos'
-    ct2 = 'Familia'
+    ct2 = 'Família'
     ct3 = 'Trabalho'
     ct4 = 'Universidade'
 
     CATEGORIAS_CHOICES = (
         (ct1, 'Amigos'),
-        (ct2, 'Familia'),
+        (ct2, 'Família'),
         (ct3, 'Trabalho'),
         (ct4, 'Universidade'),
     )

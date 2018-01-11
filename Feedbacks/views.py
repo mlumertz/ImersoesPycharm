@@ -191,7 +191,7 @@ def novo_cliente_view(request):
 
             ct1 = Categoria(cat="Amigos", cliente=cliente)
             ct1.save()
-            ct2 = Categoria(cat="Familia", cliente=cliente)
+            ct2 = Categoria(cat="Família", cliente=cliente)
             ct2.save()
             ct3 = Categoria(cat="Universidade", cliente=cliente)
             ct3.save()
@@ -384,7 +384,7 @@ def email_cliente(request, WebKey):
         'data': cliente.Deadline,
     }
 
-    subject = 'WMP - Processo de Feedback'
+    subject = 'WMFB - Processo de Feedback'
     template = get_template('email_cliente.html')
     message = template.render(ctx)
 
@@ -402,7 +402,7 @@ def email_indicados(request, WebKey):
     psicologo, created = Responsavel.objects.get_or_create(DjangoUser=cliente.Orientador)
 
     indicados = Indicado.objects.filter(cliente=cliente)
-    subject = 'WMP - Processo de Feedback'
+    subject = 'WMFB - Processo de Feedback'
     template = get_template('email_indicado.html')
 
     for indicado in indicados:

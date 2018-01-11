@@ -135,7 +135,7 @@ class IndicadoForm(ModelForm):
         cliente =  kwargs.pop('cliente')
         super(IndicadoForm, self).__init__(*args, **kwargs)
         self.fields['Categ'].queryset = Categoria.objects.filter(cliente=cliente)
-        self.fields['Categ'].empty_label = 'Selecionar uma Categoria...'
+        self.fields['Categ'].empty_label = 'Selecionar um Contexto...'
         self.empty_permitted = False
 
 
@@ -154,7 +154,7 @@ class IndicadoPageForm(ModelForm):
 class CategoriaInputForm(ModelForm):
 
     cat = forms.CharField(max_length=50, label="",
-                           widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Nova Categoria"}), required=False)
+                           widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': "Novo Contexto"}), required=False)
 
     class Meta:
         model = Categoria
