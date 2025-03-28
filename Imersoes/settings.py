@@ -27,7 +27,7 @@ SECRET_KEY = '-*)js$0fr68qvu+7t6*(kn%4l0f+a64)c%r38vs2acgvjd!vi='
 DEBUG = False
 
 
-ALLOWED_HOSTS = ['wmfbfeedback2.jelasticlw.com.br', '127.0.0.1']
+ALLOWED_HOSTS = ['feedback360pro.com.br', '127.0.0.1']
 
 
 # Application definition
