@@ -44,7 +44,7 @@ from django.templatetags.static import static
 
 
 # Create your views here.
-pagina = 'http://feedback360pro.com.br/'
+pagina = 'http://feedback360pro.web1f17.kinghost.net/'
 email_dominio = ' @braincon.com.br'
 
 def login(request):
