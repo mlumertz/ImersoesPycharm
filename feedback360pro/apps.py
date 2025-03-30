@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class FeedbacksConfig(AppConfig):
-    name = 'Feedbacks'
+    name = 'feedback360pro'

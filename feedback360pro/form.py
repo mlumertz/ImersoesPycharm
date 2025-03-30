@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.forms import BaseInlineFormSet
 from datetime import datetime
-from Feedbacks.models import *
+from feedback360pro.models import *
 from django.forms import inlineformset_factory
 
 from functools import partial

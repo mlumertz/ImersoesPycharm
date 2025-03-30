@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.urls import include, re_path
-from Feedbacks import views
+from feedback360pro import views
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin

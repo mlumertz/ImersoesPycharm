@@ -68,8 +68,8 @@ class Migration(migrations.Migration):
                 ('Status', models.BooleanField(default=False)),
                 ('Resposta1', models.TextField()),
                 ('Resposta2', models.TextField()),
-                ('Categ', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Feedbacks.categoria')),
-                ('cliente', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Feedbacks.cliente')),
+                ('Categ', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='feedback360pro.categoria')),
+                ('cliente', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='feedback360pro.cliente')),
             ],
             options={
                 'verbose_name_plural': 'Indicados',
@@ -78,6 +78,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='categoria',
             name='cliente',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Feedbacks.cliente'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='feedback360pro.cliente'),
         ),
     ]
