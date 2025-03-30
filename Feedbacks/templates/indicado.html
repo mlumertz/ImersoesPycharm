@@ -1,6 +1,6 @@
 ﻿{% extends "base_cliente.html" %}
 
-{% load staticfiles %} 
+{% load static %}
 
 {% block title %} WMP - Imersões {% endblock %}
 
@@ -14,18 +14,18 @@
 
             {% if cliente.TipoDeFeedback == "Pós-Coaching" %}
 
-                 <p class="text-justify h6"> A WMFB Consultoria é uma empresa especializada em desenvolver Famílias Empresárias. Estamos realizando um <strong>{{ cliente.FeedbackNome }}</strong> com <strong>{{ cliente.Nome }}</strong>. </p>
+                 <p class="text-justify h6"> A Braincon Consultoria é uma empresa especializada em desenvolver Famílias Empresárias. Estamos realizando um <strong>{{ cliente.FeedbackNome }}</strong> com <strong>{{ cliente.Nome }}</strong>. </p>
 
-                <p class="text-justify h6">  Nesse processo, fazemos uma atividade intitulada Feedback, na qual {{ cliente.Nome }}
+                <p class="text-justify h6">  Nesse processo, fazemos uma atividade intitulada Feedback 360, na qual {{ cliente.Nome }}
                     deve indicar nomes de pessoas importantes para a sua carreira que estão acompanhando a sua trajetória no último ano, as quais poderiam
                 fornecer suas percepções recentes sobre a mesma. Assim, solicitamos que você responda da maneira mais completa possível, fornecendo exemplos, ao questionário abaixo. </p>
 
             {% else %}
 
-                <p class="text-justify h6"> A WMFB Consultoria é uma empresa especializada em desenvolver Famílias Empresárias.
+                <p class="text-justify h6"> A Braincon Consultoria é uma empresa especializada em desenvolver Famílias Empresárias.
                     Estamos realizando um <strong>{{ cliente.FeedbackNome }}</strong> com <strong>{{ cliente.Nome }}</strong>. </p>
 
-                <p class="text-justify h6">  Nesse processo, fazemos uma atividade intitulada Feedback, na qual {{ cliente.Nome }}
+                <p class="text-justify h6">  Nesse processo, fazemos uma atividade intitulada Feedback 360, na qual {{ cliente.Nome }}
                     deve indicar nomes de pessoas importantes para a sua carreira, as quais poderiam fornecer suas percepções sobre ele.
                     Assim, solicitamos que você responda da maneira mais completa possível, fornecendo exemplos, ao questionário abaixo. </p>
 

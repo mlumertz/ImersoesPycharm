@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-*)js$0fr68qvu+7t6*(kn%4l0f+a64)c%r38vs2acgvjd!vi='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = ['feedback360pro.web1f17.kinghost.net', '127.0.0.1']
@@ -138,3 +138,5 @@ EMAIL_HOST_PASSWORD = 'eucaliptos'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 SESSION_COOKIE_AGE = 600
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'

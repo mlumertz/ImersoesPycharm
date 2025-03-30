@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 from django.shortcuts import render
-from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
@@ -48,12 +47,12 @@ pagina = 'http://feedback360pro.web1f17.kinghost.net/'
 email_dominio = ' @braincon.com.br'
 
 def login(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         update_StatusDeadline(request.user) #TODO mudar depois !!! usar cron
         return HttpResponseRedirect('/Psicologo')
     c = {'invalid': False}
     c.update(csrf(request))
-    return render_to_response('login.html', c)
+    return render(None, 'login.html', c)
 
 
 def auth_view(request):
@@ -68,13 +67,13 @@ def auth_view(request):
     else:
         c = {'invalid': True}
         c.update(csrf(request))
-        return render_to_response("login.html", c)  # our template can detect this variable
+        return render(None, "login.html", c)  # our template can detect this variable
         #return HttpResponseRedirect('/invalid')
 
 def novo_usuario_view(request):
     c = {}
     c.update(csrf(request))
-    return render_to_response('new_user.html', c)
+    return render(None, 'new_user.html', c)
 
 def criar_novo_usuario_view(request):
 
@@ -97,7 +96,7 @@ def criar_novo_usuario_view(request):
         email = EmailMessage(subject, mensagem, settings.EMAIL_HOST_USER, [usuario.email])
         email.send()
 
-        return render_to_response('loading_page.html') #TODO pagina de sucesso no registro
+        return render(None, 'loading_page.html') #TODO pagina de sucesso no registro
 
     else:
         return HttpResponseRedirect('/invalid') #TODO pagina de registro invalido
@@ -133,12 +132,12 @@ def auth_mudar_senha_view(request):
 
 
 def loggedin(request):
-    return render_to_response('loggedin.html',
+    return render(None, 'loggedin.html',
                               {'full_name': request.user.username})
 
 
 def invalid_login(request):
-    return render_to_response('invalid_login.html')
+    return render(None, 'invalid_login.html')
 
 
 def logout(request):
@@ -205,7 +204,7 @@ def novo_cliente_view(request):
     args = {}
     args.update(csrf(request))
     args['form'] = form
-    return render_to_response('novo_cliente.html', args)
+    return render(None, 'novo_cliente.html', args)
 
 @login_required
 def editar_cliente_view(request, WebKey):
@@ -227,7 +226,7 @@ def editar_cliente_view(request, WebKey):
     args.update(csrf(request))
     args['form'] = form
     args['cliente'] = cliente
-    return render_to_response('edit_cliente.html', args)
+    return render(None, 'edit_cliente.html', args)
 
 @login_required
 def perfil_view(request):
@@ -251,14 +250,14 @@ def perfil_view(request):
     args['form'] = form
     args['user'] = djangoU
 
-    return render_to_response('profile.html', args)
+    return render(None, 'profile.html', args)
 
 def sucesso(request):
 
-    return render_to_response('sucesso.html')
+    return render(None, 'sucesso.html')
 
 def sucesso_indicado(request):
-    return render_to_response('sucesso_indicado.html')
+    return render(None,'sucesso_indicado.html')
 
 def indicado_view(request, WebKey):
 
@@ -266,7 +265,7 @@ def indicado_view(request, WebKey):
     cliente = indicado.cliente
 
     if cliente.Deadline < date.today():
-        return render_to_response('DeadlineAtingido.html')
+        return render(None, 'DeadlineAtingido.html')
 
     psicologo = cliente.Orientador
     perfil, created = Responsavel.objects.get_or_create(DjangoUser=psicologo)
@@ -278,7 +277,7 @@ def indicado_view(request, WebKey):
             indicado = form.save()
             indicado.Status = True
             indicado.save()
-            return render_to_response('sucesso_indicado.html')
+            return render(None, 'sucesso_indicado.html')
 
     else:
         args = {}
@@ -288,7 +287,7 @@ def indicado_view(request, WebKey):
         args['cliente'] = cliente
         args['perfil'] = perfil
         args['psicologo'] = psicologo
-        return render_to_response('indicado.html', args)
+        return render(None, 'indicado.html', args)
 
 
 def cadastro_indicados_view(request, WebKey):
@@ -300,10 +299,10 @@ def cadastro_indicados_view(request, WebKey):
     path = '/Cliente/%s' % WebKey
 
     if cliente.Deadline < date.today():
-        return render_to_response('DeadlineAtingido.html')
+        return render(None, 'DeadlineAtingido.html')
 
     if cliente.Status:
-        return render_to_response('sucesso.html')
+        return render(None, 'sucesso.html')
 
 
     cliente_formsetFactory = inlineformset_factory(Cliente, Indicado, form=IndicadoForm, extra=0, min_num=3, validate_min=True,)
@@ -328,7 +327,7 @@ def cadastro_indicados_view(request, WebKey):
                 cliente.Status = formset.is_valid()
                 cliente.save()
                 email_indicados(request, cliente.WebKey)
-                return render_to_response('sucesso.html')
+                return render(None, 'sucesso.html')
                 DoNotCheck = False
 
 
@@ -341,7 +340,7 @@ def cadastro_indicados_view(request, WebKey):
     args['perfil'] = perfil
     args['DoNotCheck'] =  DoNotCheck
 
-    return render_to_response( 'cadastro_indicados.html', args)
+    return render(None, 'cadastro_indicados.html', args)
 
 @login_required
 def delete_cliente (request, WebKey):
@@ -422,7 +421,7 @@ def email_indicados(request, WebKey):
         email.content_subtype = 'html'
         email.send()
 
-    return render_to_response('sucesso.html')
+    return render(None, 'sucesso.html')
 
 
 def nova_categoria_view(request, WebKey):
